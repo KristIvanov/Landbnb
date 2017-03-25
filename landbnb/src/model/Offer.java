@@ -2,11 +2,11 @@ package model;
 
 import java.time.LocalDate;
 
-import interactions.Booking;
-import mainsite.MainSite;
-import places.RentedPlace;
-import users.Host;
-import users.User;
+import model.interactions.Booking;
+import model.mainsite.MainSite;
+import model.places.RentedPlace;
+import model.users.Host;
+import model.users.User;
 
 public class Offer {
 	

@@ -3,18 +3,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import interactions.Booking;
-import mainsite.MainSite;
+import model.interactions.Booking;
+import model.mainsite.MainSite;
 import model.Offer;
-import places.Address;
-import places.Address.Region;
-import users.Host;
-import users.InvalidEmailException;
-import users.InvalidNameException;
-import users.InvalidPasswordException;
-import users.InvalidPhoneNumberException;
-import users.NotMatchingPasswordsException;
-import users.User;
+import model.places.Address;
+import model.places.Address.Region;
+import model.users.Host;
+import model.users.InvalidEmailException;
+import model.users.InvalidNameException;
+import model.users.InvalidPasswordException;
+import model.users.InvalidPhoneNumberException;
+import model.users.NotMatchingPasswordsException;
+import model.users.User;
 
 public class TheDemo {
 	
