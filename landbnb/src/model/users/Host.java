@@ -2,7 +2,7 @@ package model.users;
 
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.Scanner;
+
 
 import model.interactions.Booking;
 import model.interactions.Review;
@@ -26,11 +26,11 @@ public class Host extends User{
 	}
 	
 	@Override
-	public Offer createOffer(String name, boolean entireHome, Address address, int maxGuests, int beds, double pricePerNight,
+	public Offer createOffer(String name, boolean entireHome, Address address, int rooms, int maxGuests, int beds, double pricePerNight,
 			String description, LocalDate start, LocalDate end) {
 		RentedPlace newPlace;
 		if (entireHome) {
-			newPlace = new EntireHome(name, this, address, maxGuests, beds, pricePerNight, description);
+			newPlace = new EntireHome(name, this, address, rooms, maxGuests, beds, pricePerNight, description);
 		}
 		else {
 			newPlace = new Room(name, this, address, maxGuests, beds, pricePerNight, description);

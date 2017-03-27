@@ -51,7 +51,7 @@ public class User implements IGiveReview, IReceiveReview{
 		
 	}
 	
-	public Offer createOffer(String name, boolean entireHome, Address address, int maxGuests, int beds, double pricePerNight, String description, LocalDate start, LocalDate end){
+	public Offer createOffer(String name, boolean entireHome, Address address, int rooms, int maxGuests, int beds, double pricePerNight, String description, LocalDate start, LocalDate end){
 		return null;
 	}
 	
