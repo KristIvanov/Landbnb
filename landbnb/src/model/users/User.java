@@ -16,9 +16,10 @@ import model.places.Room;
 
 public class User implements IGiveReview, IReceiveReview{
 	
-	private static List<String> emails = new ArrayList();
+	protected long id;
 	protected String password; // Dobaveno!
-	protected String name;
+	protected String firstName;
+	protected String familyName;
 	protected String mail;
 	protected String phone;
 	protected ArrayList<Review> receivedReviews;
@@ -27,36 +28,20 @@ public class User implements IGiveReview, IReceiveReview{
 	public static Scanner sc;
 	
 	
-	public User(String name, String mail, String phone, String password, String reenteredPass) throws NotMatchingPasswordsException, InvalidPasswordException, InvalidEmailException, InvalidNameException, InvalidPhoneNumberException {
-		if (name == null || name.isEmpty()){
-			throw new InvalidNameException();
-		}
-		//if(!EmailValidator.getInstance().isValid(mail) || emails.contains(mail)){
-			//throw new InvalidEmailException();
-		//}
-		if(!Validator.isPhoneNumber(phone)){
-			throw new InvalidPhoneNumberException();
-		}
-		if(!Validator.isValidPassword(password)){
-			throw new InvalidPasswordException();
-		}
-		if(!password.equals(reenteredPass)){
-			throw new NotMatchingPasswordsException();
-		}
-		
-		this.name = name;
-		emails.add(mail);
+	public User(String firstName, String familyName, String mail, String phone, String password, Double rating) {	
+		this.firstName = firstName;
+		this.familyName = familyName;
 		this.password = password;
 		this.mail = mail; //TODO if regex && !OurFirm.users.contains(mail)
 		this.phone = phone;
 		this.receivedReviews = new ArrayList<>();
 		this.bookings = new ArrayList<>();
-		this.rating = 0;
+		this.rating = rating;
 	}
-
-
+	
 	public User(User user) {
-		this.name = user.name;
+		this.firstName = user.firstName;
+		this.familyName = user.familyName;
 		this.phone = user.phone;
 		this.rating = user.rating;
 		this.receivedReviews = user.receivedReviews;
@@ -70,17 +55,32 @@ public class User implements IGiveReview, IReceiveReview{
 		return null;
 	}
 	
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	public String getFamilyName() {
+		return familyName;
 	}
 	
 	public String getMail() {
 		return mail;
 	}
-
-
+	
 	public void addBooking(Booking newBooking) {
 		this.bookings.add(newBooking);
+	}
+	
+	public long getId() {
+		return id;
+	}
+
+	public String getPhoneNumber(){
+		return phone;
+	}
+
+	public String getPassword() {
+		return password;
 	}
 
 
@@ -169,6 +169,18 @@ public class User implements IGiveReview, IReceiveReview{
 		}
 		return rating;
 	}
-	
 
+
+	@Override
+	public String getName() {
+		return this.firstName +" " + this.familyName;
+	}
+
+
+	public void setId(long id) {
+		this.id = id;
+		
+	}
+	
+	
 }

@@ -166,7 +166,9 @@ public class MainSite {
 
 
 	public void createAccount(User user) {
-		if(!users.containsKey(user.getMail())) users.put(user.getMail(), user);
+		if(!users.containsKey(user.getMail())){
+			users.put(user.getMail(), user);
+		}
 	}
 	
 	public void addOffer(Offer offer){
@@ -178,39 +180,7 @@ public class MainSite {
 	
 	
 	// Dobaveni metodi!
-	// V metodi addUser i logIn nqma finally{sc.close}, zashtoto kato se close-ne v ediniq metod,
-	// sled towa hvarlq NoSuchElementException, kato go pravim s failove shte ima STREAM.close
-	public void addUser(){  // Ako ne vavede pravilni danni pak se izvikva tozi metod ( v catch block-a)
-		String password;
-		String reenteredPass;
-		String name;
-		String mail;
-		String phone;
-		Scanner sc = new Scanner(System.in); // Tuk predpolagam che shte se otvarq nqkakav fail, koito clienta ni e izpratil
-		System.out.println("SIGN UP");
-		System.out.println("Please, enter name");
-		name = sc.nextLine();
-		System.out.println("Please, enter email");
-		mail = sc.nextLine();
-		System.out.println("Please, enter phone number");
-		phone = sc.nextLine();
-		System.out.println("Please, enter password");
-		password = sc.nextLine();
-		System.out.println("Please, re-enter password");
-		reenteredPass = sc.nextLine();
-		User user;
-		try {
-			user = new User(name,mail,phone,password,reenteredPass);
-			if(user!=null){
-				users.put(user.getMail(), user);
-			}
-		} catch (NotMatchingPasswordsException | InvalidPasswordException | InvalidEmailException | InvalidNameException
-				| InvalidPhoneNumberException e) {
-			System.out.println(e.getMessage());
-			this.addUser();
-		}
-	}
-	
+	//Tuk imashe metodi, koito otidoha v UsersDAO - public void addUsers()
 	public void logIn(){
 		Scanner sc = new Scanner(System.in); // Tuk predpolagam che shte se otvarq nqkakav fail, koito clienta ni e izpratil
 		String mail;

@@ -7,6 +7,7 @@ public class Validator {
 
 	private static final String PHONE_NUMBER_PATTERN = "^(08[987][0-9]{7})$";
 	private static final String PASSWORD_PATTERN = "\\A(?=\\S*?[0-9])(?=\\S*?[a-z])(?=\\S*?[A-Z])\\S{8,}\\z";
+	private static final String NAME_VALIDATOR = "^[A-Z]{1}[a-z]{3,}$";
 	private static Pattern pattern;
 	private static Matcher matcher;
 	
@@ -21,4 +22,9 @@ public class Validator {
 		return matcher.matches();
 	}
 	
+	public static boolean isValidName(final String name){
+		pattern = Pattern.compile(NAME_VALIDATOR);
+		matcher = pattern.matcher(name);
+		return matcher.matches();
+	}
 }
