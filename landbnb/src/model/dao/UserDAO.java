@@ -4,13 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Scanner;
 
-import model.users.InvalidEmailException;
-import model.users.InvalidNameException;
-import model.users.InvalidPasswordException;
-import model.users.InvalidPhoneNumberException;
-import model.users.NotMatchingPasswordsException;
 import model.users.User;
 
 public class UserDAO {

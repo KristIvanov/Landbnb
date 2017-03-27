@@ -9,4 +9,9 @@ public class Room extends RentedPlace{
 		this.isEntireHome = false;
 	}
 
+	@Override
+	public int getRooms() {
+		return 1;
+	}
+
 }

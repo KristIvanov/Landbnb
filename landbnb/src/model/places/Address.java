@@ -11,26 +11,53 @@ public class Address {
 		TARGOVISHTE, HASKOVO, SHUMEN, YAMBOL
 		}
 		
-	private Region region;
+	private String region;
 	private String city;
 	private String street;
-	private int number;
+	private String number;
+	private int apartment;
+	private long id;
 	
 	@Override
 	public String toString() {
 		return (this.street + " " + this.number + ", " + this.city + ", " + this.region.toString());
 	}
 
-	public Address(Region region, String city, String street, int number) {
+	public Address(String region, String city, String street, String number, int ap) {
 		
 		this.region = region;
 		if (city!=null && !city.isEmpty()) this.city = city;
 		if (street!=null && !street.isEmpty()) this.street = street;
-		if (number > 0) this.number = number;
+		if (number !=null && !number.isEmpty()) this.number = number;
+		if (ap > 0) this.apartment = ap;
 	}
 	
-	public Region getRegion() {
+	public String getRegion() {
 		return region;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	public long getId() {
+		return id;
+	}
+	
+	public String getCity() {
+		return city;
+	}
+	
+	public int getApartment() {
+		return apartment;
+	}
+	
+	public String getStreet() {
+		return street;
+	}
+	
+	public String getNumber() {
+		return number;
 	}
 	
 	

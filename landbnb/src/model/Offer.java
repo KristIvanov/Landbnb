@@ -14,6 +14,7 @@ public class Offer {
 	private Host host;
 	private LocalDate startOfPeriod;
 	private LocalDate endOfPeriod;
+	private long id;
 	
 	public RentedPlace getPlace() {
 		return place;
@@ -53,6 +54,10 @@ public class Offer {
 	
 	public void book(User loggedIn, Offer offer){
 		//TODO if(!userLogged){ log in };
+	}
+	
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	

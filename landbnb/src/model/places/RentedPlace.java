@@ -19,6 +19,7 @@ public abstract class RentedPlace implements IReceiveReview{
 	protected boolean isEntireHome;
 	protected double rating;
 	protected ArrayList<Review> receivedReviews;
+	private long id;
 	
 	//TODO STRING TO ENUM address!!!
 	
@@ -84,6 +85,20 @@ public abstract class RentedPlace implements IReceiveReview{
 	
 	public String getName() {
 		return name;
+	}
+
+	public long getId() {
+		return id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	public abstract int getRooms();
+	
+	public Address getAddressObject() {
+		return address;
 	}
 	
 	
