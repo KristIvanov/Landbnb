@@ -20,6 +20,6 @@ Confirm password: <input type="password" placeholder="re-enter password" name="r
 Phone Number: <input type="text" placeholder="enter phone number" name="phoneNumber"></br>
 <input type="submit" value = "Register"></br>
 </form>
-<a href="login.html">Already a registered user? Login here.</a>
+<a href="logIn.jsp">Already a registered user? Login here.</a>
 </body>
 </html>

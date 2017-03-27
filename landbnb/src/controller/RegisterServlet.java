@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -27,7 +26,7 @@ import model.users.Validator;
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet{
 	
-	private String filename = "index.html";
+	private static String fileName = "index.html";
 	private static String errorMsg = " ";
 
 	public static String getErrorMsg() {
@@ -54,9 +53,9 @@ public class RegisterServlet extends HttpServlet{
 				| InvalidPhoneNumberException | UserAlreadyExistsException | SQLException e) {
 		}
 		
-		RequestDispatcher rd = req.getRequestDispatcher(filename);
+		RequestDispatcher rd = req.getRequestDispatcher(fileName);
 		rd.forward(req, resp);
-		this.errorMsg = " ";
+		errorMsg = " ";
 	}
 	
 	private  void validateData(String firstName, String familyName, String pass, String reenteredPass, String email, String phoneNumber)
@@ -64,7 +63,7 @@ public class RegisterServlet extends HttpServlet{
 		
 		if(email.isEmpty()||!EmailValidator.getInstance().isValid(email)){
 			errorMsg = "Invalid email address";
-			filename = "register.jsp";
+			fileName = "register.jsp";
 			throw new InvalidEmailException();
 		}
 		//if(UserDAO.getInstance().getAllUsers().containsKey(email)){
@@ -73,25 +72,24 @@ public class RegisterServlet extends HttpServlet{
 		//}
 		if(!Validator.isValidName(firstName)||!Validator.isValidName(familyName)){
 			errorMsg = "Invalid names. Must start with Upper case and contain only lower cases after";
-			filename = "register.jsp";
+			fileName = "register.jsp";
 			throw new InvalidNameException();
 		}
 		if(!Validator.isValidPassword(pass)){
 			errorMsg = "Password must conain atleast 8 symobls (atleast one Upper case, lower case and digit)";
-			filename = "register.jsp";
+			fileName = "register.jsp";
 			throw new InvalidPasswordException();
 		}
 		if(!pass.equals(reenteredPass)){
 			errorMsg = "Passwords not matching";
-			filename = "register.jsp";
+			fileName = "register.jsp";
 			throw new NotMatchingPasswordsException();
 		}
 		if(!Validator.isPhoneNumber(phoneNumber)){
 			errorMsg = "Invalid phone number";
-			filename = "register.jsp";
+			fileName = "register.jsp";
 			throw new InvalidPhoneNumberException();
 		}
-		this.filename = "login.html";
 	}
 
 
