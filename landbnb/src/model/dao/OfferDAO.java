@@ -7,7 +7,10 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import model.Offer;
 import model.places.Address;
@@ -66,7 +69,7 @@ public class OfferDAO {
 		
 	}
 
-	public void addToDB(Offer offer, LocalDateTime date1, LocalDateTime date2) throws SQLException {
+	public synchronized void addToDB(Offer offer, LocalDateTime date1, LocalDateTime date2) throws SQLException {
 		PreparedStatement st2;
 		String sql2 = "INSERT IGNORE INTO offers (start_of_period, end_of_period, fk_place_id) VALUES (?, ?, ?)";
 		st2 = DBManager.getInstance().getConnection().prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
@@ -78,7 +81,27 @@ public class OfferDAO {
 		while(rSet.next()){
 			offer.setId(rSet.getLong(1));;
 		}
+	}
+	
+	public static synchronized ArrayList<Offer> search(Address.Region address, LocalDate start, LocalDate end, int guests){
 		
+		ArrayList<Offer> offersForYou = new ArrayList<>();
+		
+		for (Iterator<Entry<LocalDate, HashMap<String, Offer>>> it = allOffers.entrySet().iterator(); it.hasNext();){
+			Entry<LocalDate, HashMap<String, Offer>> e = it.next();
+			for (Iterator<Entry<String, Offer>> it2 = e.getValue().entrySet().iterator(); it2.hasNext();) {
+				Entry<String, Offer> e2 = it2.next();
+				if (e2.getKey().toLowerCase().contains((address.toString().toLowerCase())) && 
+					e2.getValue().getPlace().getMaxGuests() >= guests &&
+					!e2.getValue().getStartOfPeriod().isAfter(start) &&
+					!e2.getValue().getEndOfPeriod().isBefore(end)) {
+					Offer forYou = new Offer(e2.getValue().getPlace(), e2.getValue().getHost(), start, end);
+					offersForYou.add(forYou);
+				}
+			}
+		}
+		
+		return offersForYou;
 	}
 	
 	

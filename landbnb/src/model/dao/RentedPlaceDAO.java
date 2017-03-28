@@ -77,7 +77,7 @@ public class RentedPlaceDAO{
 		return instance;
 	}
 
-	public void addToDB(RentedPlace place) throws SQLException {
+	public synchronized void addToDB(RentedPlace place) throws SQLException {
 		PreparedStatement st1;
 		String sql = "INSERT IGNORE INTO rented_places (name, max_guests, beds, rooms, price_per_night, rating, description, is_only_one_room, fk_address_id, fk_owner_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		st1 = DBManager.getInstance().getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -99,7 +99,7 @@ public class RentedPlaceDAO{
 		
 	}
 	
-	public static Map<String, RentedPlace> getAllPlaces() {
+	public synchronized static Map<String, RentedPlace> getAllPlaces() {
 		return Collections.unmodifiableMap(allPlaces);
 	}
 	

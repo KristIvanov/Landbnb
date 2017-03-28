@@ -43,7 +43,7 @@ public class AddressDAO {
 		return instance;
 	}
 
-	public void addToDB(Address address) throws SQLException {
+	public synchronized void addToDB(Address address) throws SQLException {
 		PreparedStatement st;
 		String sql = "INSERT IGNORE INTO addresses (region, city, street, number, apartment) VALUES (?, ?, ?, ?, ?)";
 		st = DBManager.getInstance().getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -60,7 +60,7 @@ public class AddressDAO {
 		
 	}
 	
-	public static Map<Long, Address> getAllAddresses() {
+	public synchronized static Map<Long, Address> getAllAddresses() {
 		return Collections.unmodifiableMap(allAddresses);
 	}
 	
