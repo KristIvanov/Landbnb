@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>LandBNB</title>
+</head>
+<body>
+<!--  -->
+<%@ page import="controller.AddAPlaceServlet" %>
+
+<h5 id = "error"><% out.println(AddAPlaceServlet.getErrorMsg());  %></h5>
+<form action="addaplace" method="post">
+<h3>Please enter short name</h3>
+Name: <input type="text" placeholder="enter name" name="name"></br>
+<h3>Please enter Address</h3>
+Region: <input type="text" placeholder="enter first name" name="region">
+City: <input type="text" placeholder="enter city" name="city">
+Street: <input type="text" placeholder="enter street" name="street">
+Number: <input type="text" placeholder="enter number" name="number">
+Apartment: <input type="text" placeholder="enter apartment" name="apartment"> 
+<h3>Please enter place details</h3></br>
+Max guests: <select name="maxGuests">
+<option value="1">1
+<option value="2">2
+<option value="3">3
+<option value="4">4
+<option value="5">5
+<option value="6">6
+<option value="7">7
+<option value="8">8
+<option value="9">9
+<option value="10">10
+<option value="11">11
+<option value="12">12
+<option value="16">16
+<option value="20">20
+<option value="25">25
+<option value="30">30
+<option value="40">40
+<option value="50">50
+</select>
+Rooms: <select name="beds">
+<option value="1">1
+<option value="2">2
+<option value="3">3
+<option value="4">4
+<option value="5">5
+<option value="6">6
+<option value="7">7
+<option value="8">8
+<option value="9">9
+<option value="10">10
+<option value="11">11
+<option value="12">12
+</select>
+Beds: <select name="beds">
+<option value="1">1
+<option value="2">2
+<option value="3">3
+<option value="4">4
+<option value="5">5
+<option value="6">6
+<option value="7">7
+<option value="8">8
+<option value="9">9
+<option value="10">10
+<option value="11">11
+<option value="12">12
+<option value="16">13
+<option value="20">14
+<option value="25">15
+<option value="30">16
+<option value="40">17
+<option value="50">18
+<option value="50">19
+<option value="50">20
+<option value="50">21
+<option value="50">22
+<option value="50">23
+<option value="50">24
+<option value="50">25
+</select>
+Price per night: <input type="text" placeholder="enter price" name="pricePerNight"></br>
+Description: </br><textarea name="description" style="width:250px;height:150px;"></textarea>
+</br>
+<h3>Please specify dates available</h3></br>
+Available from: <input type="date" placeholder="enter number" name="startDate">
+to: <input type="date" placeholder="enter number" name="endDate">
+<input type="submit" value = "AddAPlace"></br>
+</form>
+<a href="index.html">Back to home page.</a>
+</body>
+</html>

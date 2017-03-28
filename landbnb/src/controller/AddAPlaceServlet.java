@@ -59,8 +59,8 @@ public class AddAPlaceServlet extends HttpServlet{
 		
 		//creating place
 		int maxGuests = Integer.parseInt(req.getParameter("maxGuests"));
-		int beds = Integer.parseInt(req.getParameter("beds")) ;
-		double pricePerNight = Double.parseDouble(req.getParameter("number")) ;
+		int beds = Integer.parseInt(req.getParameter("beds"));
+		double pricePerNight = Double.parseDouble(req.getParameter("pricePerNight"));
 		String description = req.getParameter("description");
 		boolean isEntirePlace = req.getParameterMap().containsValue("rooms");
 		int roomsNum = 1;
@@ -79,13 +79,13 @@ public class AddAPlaceServlet extends HttpServlet{
 		
 		//create offer
 		
-		SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat in = new SimpleDateFormat("dd/MM/yyyy");
 		String parameter = req.getParameter("startDate");
 		Date date;
 		try {
 			date = in.parse(parameter);
 			LocalDateTime date1 = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-			String parameter2 = req.getParameter("startDate");
+			String parameter2 = req.getParameter("endDate");
 			date = in.parse(parameter2);
 			LocalDateTime date2 = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 			Offer offer = new Offer(place, (Host)user, date1.toLocalDate(), date2.toLocalDate());
