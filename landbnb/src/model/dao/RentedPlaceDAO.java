@@ -4,7 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 import model.places.Address;
 import model.places.EntireHome;
@@ -15,7 +17,6 @@ import model.users.User;
 public class RentedPlaceDAO{
 	
 	private static RentedPlaceDAO instance;
-	private static AddressDAO addressInstance;
 	private static HashMap<String, RentedPlace> allPlaces;//key id
 	
 	private RentedPlaceDAO() {
@@ -98,6 +99,9 @@ public class RentedPlaceDAO{
 		
 	}
 	
+	public static Map<String, RentedPlace> getAllPlaces() {
+		return Collections.unmodifiableMap(allPlaces);
+	}
 	
 
 }

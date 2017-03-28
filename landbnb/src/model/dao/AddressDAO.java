@@ -4,7 +4,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
+
 import model.places.Address;
 
 public class AddressDAO {
@@ -55,6 +58,10 @@ public class AddressDAO {
 			address.setId(rSet.getLong(1));;
 		}
 		
+	}
+	
+	public static Map<Long, Address> getAllAddresses() {
+		return Collections.unmodifiableMap(allAddresses);
 	}
 	
 	

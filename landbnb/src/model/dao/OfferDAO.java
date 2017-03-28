@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import model.Offer;
+import model.places.Address;
 import model.places.RentedPlace;
 import model.users.Host;
 import model.users.User;
@@ -40,13 +41,10 @@ public class OfferDAO {
 						st1.setLong(1, offerId);
 						ResultSet res1 = st1.executeQuery();
 						long addressId = res1.getLong("fk_address_id");
-						//take their addresses
-						RentedPlace place = null;
-						Host host = null;
-						//TODO create address
-						//TODO create place
-						//TODO create offer
-						Offer offer = new Offer(place, host, res.getDate("start_of_period").toLocalDate(), res.getDate("end_of_period").toLocalDate());
+						Address address = AddressDAO.getInstance().getAllAddresses().get(addressId);
+						RentedPlace place = RentedPlaceDAO.getInstance().getAllPlaces().get(address);
+						User host = place.getHost();
+						Offer offer = new Offer(place, (Host) host, res.getDate("start_of_period").toLocalDate(), res.getDate("end_of_period").toLocalDate());
 						offer.setId(offerId);
 						allOffers.put(res.getDate("start_of_period").toLocalDate(), new HashMap<>());
 						allOffers.get(res.getDate("start_of_period").toLocalDate()).put(place.getAddress(), offer);
