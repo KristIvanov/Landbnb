@@ -37,7 +37,7 @@ public class UserDAO {
 		return users;
 	}
 	
-	public void addUser(User user) throws SQLException{ 
+	public synchronized void addUser(User user) throws SQLException{ 
 		String sql = "INSERT INTO users (email_address, password, first_name, last_name, phone, rating) values (?, ?, ?, ?, ?, 0.0)";
 		PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(sql);
 		st.setString(1, user.getName());
@@ -55,6 +55,12 @@ public class UserDAO {
 	
 	public String hashPassword(String password){
 		return "" + (password.hashCode()*31+203)*19;
+	}
+
+	public synchronized void removeUser(User user) throws SQLException {
+		String sql = "DELETE FROM users WHERE email_address = " + user.getMail();
+		PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(sql);
+		st.executeUpdate();
 	}
 
 }

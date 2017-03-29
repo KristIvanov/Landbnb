@@ -12,6 +12,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import model.Offer;
 import model.dao.AddressDAO;
 import model.dao.OfferDAO;
@@ -37,8 +39,8 @@ public class AddAPlaceServlet extends HttpServlet{
 		
 		//getting parameters
 		String name = req.getParameter("name");
-		User user = null;
-		//TODO User = getfromsession;
+		HttpSession session = req.getSession();
+		User user = (User) session.getAttribute("user");
 		String region = req.getParameter("region");
 		String city = req.getParameter("city");
 		String street = req.getParameter("street");

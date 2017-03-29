@@ -83,7 +83,7 @@ public class OfferDAO {
 		}
 	}
 	
-	public static synchronized ArrayList<Offer> search(Address.Region address, LocalDate start, LocalDate end, int guests){
+	public static synchronized ArrayList<Offer> search(String address, LocalDate start, LocalDate end, int guests){
 		
 		ArrayList<Offer> offersForYou = new ArrayList<>();
 		
@@ -91,7 +91,7 @@ public class OfferDAO {
 			Entry<LocalDate, HashMap<String, Offer>> e = it.next();
 			for (Iterator<Entry<String, Offer>> it2 = e.getValue().entrySet().iterator(); it2.hasNext();) {
 				Entry<String, Offer> e2 = it2.next();
-				if (e2.getKey().toLowerCase().contains((address.toString().toLowerCase())) && 
+				if (e2.getKey().toLowerCase().contains((address.toLowerCase())) && 
 					e2.getValue().getPlace().getMaxGuests() >= guests &&
 					!e2.getValue().getStartOfPeriod().isAfter(start) &&
 					!e2.getValue().getEndOfPeriod().isBefore(end)) {
