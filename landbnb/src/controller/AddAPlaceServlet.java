@@ -33,6 +33,10 @@ public class AddAPlaceServlet extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 	private static String errorMsg = " ";
+	
+	public static String getErrorMsg() {
+		return AddAPlaceServlet.errorMsg;
+	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{

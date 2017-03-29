@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,13 +17,32 @@ import javax.servlet.http.HttpServletResponse;
 import model.Offer;
 import model.dao.OfferDAO;
 
+@WebServlet("search")
 public class SearchServlet extends HttpServlet{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static String errorMsg = " ";
+	
+	public static String getErrorMsg() {
+		return SearchServlet.errorMsg;
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO take args
+		
 		String region = req.getParameter("region");
-		int guests = Integer.parseInt(req.getParameter("guests"));
+		String guests = req.getParameter("guests");
+		int guestsNum = 0;
+		if (isNumber(guests)){
+			guestsNum = Integer.parseInt(guests);
+		}
+		else {
+			errorMsg = "Invalid number of guests";
+		}
+		
 		SimpleDateFormat in = new SimpleDateFormat("dd/MM/yyyy");
 		String parameter = req.getParameter("startDate");
 		Date date;
@@ -32,7 +52,8 @@ public class SearchServlet extends HttpServlet{
 			String parameter2 = req.getParameter("endDate");
 			date = in.parse(parameter2);
 			LocalDateTime date2 = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-			ArrayList<Offer> offersforYou = OfferDAO.getInstance().search(region, date1.toLocalDate(), date2.toLocalDate(), guests);
+			ArrayList<Offer> offersforYou = OfferDAO.getInstance().search(region, date1.toLocalDate(), date2.toLocalDate(), guestsNum);
+			//	TODO redirect & somehow print each offer in the page
 		} catch (ParseException e) {
 			System.out.println("Invalid input");
 			//TODO different response?
@@ -40,5 +61,13 @@ public class SearchServlet extends HttpServlet{
 		
 		
 		
+	}
+	
+	private boolean isNumber(String string){
+		boolean isnumber = true;
+		for (char c : string.toCharArray()){
+			 if (c < '0' || c > '9') isnumber = false;
+		}
+		return isnumber;
 	}
 }
