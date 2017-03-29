@@ -40,7 +40,7 @@ public class MainSite {
 
 
 
-	public ArrayList<Offer> search(Address.Region address, LocalDate start, LocalDate end, int guests){
+	public ArrayList<Offer> search(String address, LocalDate start, LocalDate end, int guests){
 		System.out.println("SEARCH STARTS");
 		for (Iterator<Entry<LocalDate, HashMap<String, Offer>>> it = this.offers.entrySet().iterator(); it.hasNext();){
 			Entry<LocalDate, HashMap<String, Offer>> e = it.next();

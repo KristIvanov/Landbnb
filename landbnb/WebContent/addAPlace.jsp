@@ -1,8 +1,11 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ page import="controller.AddAPlaceServlet" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>LandBNB</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>LandBNB - Add a place</title>
 </head>
 <body>
 <!--  -->
@@ -20,65 +23,19 @@ Number: <input type="text" placeholder="enter number" name="number">
 Apartment: <input type="text" placeholder="enter apartment" name="apartment"> 
 <h3>Please enter place details</h3></br>
 Max guests: <select name="maxGuests">
-<option value="1">1
-<option value="2">2
-<option value="3">3
-<option value="4">4
-<option value="5">5
-<option value="6">6
-<option value="7">7
-<option value="8">8
-<option value="9">9
-<option value="10">10
-<option value="11">11
-<option value="12">12
-<option value="16">16
-<option value="20">20
-<option value="25">25
-<option value="30">30
-<option value="40">40
-<option value="50">50
+<% for(int i=1; i<51; i++){ %>
+		<option value="<%out.print(i);%>"><%out.print(i);%></option>
+	<%} %>
 </select>
-Rooms: <select name="beds">
-<option value="1">1
-<option value="2">2
-<option value="3">3
-<option value="4">4
-<option value="5">5
-<option value="6">6
-<option value="7">7
-<option value="8">8
-<option value="9">9
-<option value="10">10
-<option value="11">11
-<option value="12">12
+Rooms: <select name="rooms">
+<% for(int i=1; i<13; i++){ %>
+		<option value="<%out.print(i);%>"><%out.print(i);%></option>
+	<%} %>
 </select>
 Beds: <select name="beds">
-<option value="1">1
-<option value="2">2
-<option value="3">3
-<option value="4">4
-<option value="5">5
-<option value="6">6
-<option value="7">7
-<option value="8">8
-<option value="9">9
-<option value="10">10
-<option value="11">11
-<option value="12">12
-<option value="16">13
-<option value="20">14
-<option value="25">15
-<option value="30">16
-<option value="40">17
-<option value="50">18
-<option value="50">19
-<option value="50">20
-<option value="50">21
-<option value="50">22
-<option value="50">23
-<option value="50">24
-<option value="50">25
+<% for(int i=1; i<25; i++){ %>
+			<option value="<%out.print(i);%>"><%out.print(i);%></option>
+		<%} %>
 </select>
 Price per night: <input type="text" placeholder="enter price" name="pricePerNight"></br>
 Description: </br><textarea name="description" style="width:250px;height:150px;"></textarea>

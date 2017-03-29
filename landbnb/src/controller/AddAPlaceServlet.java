@@ -138,6 +138,10 @@ public class AddAPlaceServlet extends HttpServlet{
 		
 	}
 	
+	public static String getErrorMsg(){
+		return errorMsg;
+	}
+	
 	private boolean isNumber(String string){
 		boolean isnumber = true;
 		for (char c : string.toCharArray()){

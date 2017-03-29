@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="controller.RegisterServlet" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,7 +9,7 @@
 </head>
 <body>
 <!-- insert register form here that makes POST request to RegisterServlet -->
-<%@ page import="controller.RegisterServlet" %>
+
 <h3>Please register a new account</h3>
 <h5 id = "error"><% out.println(RegisterServlet.getErrorMsg());  %></h5>
 <form action="register" method="post">

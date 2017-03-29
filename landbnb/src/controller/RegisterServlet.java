@@ -44,7 +44,6 @@ public class RegisterServlet extends HttpServlet{
 		String email = req.getParameter("email");
 		String phoneNumber = req.getParameter("phoneNumber");
 		
-		
 		try {
 			this.validateData(firstName, familyName, password, reenteredPass, email, phoneNumber);
 			User user = new User(firstName, familyName, email, phoneNumber, UserDAO.getInstance().hashPassword(password), 0.0);

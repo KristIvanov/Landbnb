@@ -1,15 +1,15 @@
 package model.places;
 
-public class Address {
+import java.util.ArrayList;
+import java.util.Arrays;
 
-	public enum Region {
-		BLAGOEVGRAD, BURGAS, VARNA, VELIKOTARNOVO,
-		VIDIN, VRATSA, GABROVO, DOBRICH, KARDDZALI,
-		KYUSTENDIL, LOVECH, MONTANA, PAZARDZIK,
-		PERNIK, PLEVEN, PLOVDIV, RAZGRAD, RUSE,
-		SILISTRA, SLIVEN, SMOLYAN, SOFIA, STARAZAGORA,
-		TARGOVISHTE, HASKOVO, SHUMEN, YAMBOL
-		}
+public class Address {
+	
+	public static String[] regions =  {"Blagoevgrad", "Burgas", "Varna", "Veliko Tarnovo",
+			"Vidin", "Vratsa", "Gabrovo", "Dobrich", "Kardzali", "Kyustendil", "Lovech",
+			"Montana", "Pazardzik", "Pernik", "Pleven", "Plovdiv", "Razgrad", "Ruse",
+			"Silistra", "Sliven", "Smolyan", "Sofia", "Stara Zagora" , "Targovishte",
+			"Haskovo", "Shumen", "Yambol"};
 		
 	private String region;
 	private String city;
@@ -20,12 +20,12 @@ public class Address {
 	
 	@Override
 	public String toString() {
-		return (this.street + " " + this.number + ", " + this.city + ", " + this.region.toString());
+		return (this.street + " " + this.number + ", " + this.city + ", " + this.region);
 	}
 
 	public Address(String region, String city, String street, String number, int ap) {
 		
-		this.region = region;
+		if (region!=null && !region.isEmpty() && Arrays.asList(regions).contains(region)) this.region = region;
 		if (city!=null && !city.isEmpty()) this.city = city;
 		if (street!=null && !street.isEmpty()) this.street = street;
 		if (number !=null && !number.isEmpty()) this.number = number;
