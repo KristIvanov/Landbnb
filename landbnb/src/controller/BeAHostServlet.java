@@ -26,20 +26,32 @@ public class BeAHostServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		
-		
-		HttpSession session = req.getSession();
-		User user = (User) session.getAttribute("user");
-		//create Host
-		Host host = user.beHost();
-		
-		try {
-			UserDAO.getInstance().removeUser(user);
-			UserDAO.getInstance().addUser(host);
-		} catch (SQLException e) {
-			System.out.println("sql error");
+		HttpSession ses = req.getSession();
+		if(ses.getAttribute("logged")!= null){
+			boolean logged = (Boolean) req.getSession().getAttribute("logged");
+			if(logged){
+				HttpSession session = req.getSession();
+				User user = (User) session.getAttribute("user");
+				//create Host
+				Host host = user.beHost();
+				
+				try {
+					UserDAO.getInstance().removeUser(user);
+					UserDAO.getInstance().addUser(host);
+				} catch (SQLException e) {
+					System.out.println("sql error");
+				}
+				//redirect to AddAPlace
+				resp.sendRedirect("addaplace.html");
+			}
+			else{
+				resp.sendRedirect("index.html");
+			}
 		}
-		//redirect to AddAPlaceServlet
-		resp.sendRedirect("addaplace.html");
+		else{
+			resp.sendRedirect("index.html");
+		}
+		
 		
 	}
 }
