@@ -65,9 +65,21 @@ public class AddAPlaceServlet extends HttpServlet{
 				}
 				
 				//creating place
-				int maxGuests = Integer.parseInt(req.getParameter("maxGuests"));
-				int beds = Integer.parseInt(req.getParameter("beds"));
-				double pricePerNight = Double.parseDouble(req.getParameter("pricePerNight"));
+				String stringguests = req.getParameter("maxGuests");
+				int maxGuests = 0;
+				if (isNumber(stringguests)) {
+					maxGuests = Integer.parseInt(stringguests);
+				}
+				String bedsstring = req.getParameter("beds");
+				int beds = 0;
+				if (isNumber(bedsstring)){
+					beds = Integer.parseInt(bedsstring);
+				}
+				String stringprice = req.getParameter("pricePerNight");
+				double pricePerNight = 0.0;
+				if (isDoublePrice(stringprice)){
+					pricePerNight = Double.parseDouble(stringprice);
+				}
 				String description = req.getParameter("description");
 				boolean isEntirePlace = req.getParameterMap().containsValue("rooms");
 				int roomsNum = 1;
@@ -149,5 +161,41 @@ public class AddAPlaceServlet extends HttpServlet{
 			 if (c < '0' || c > '9') isnumber = false;
 		}
 		return isnumber;
+	}
+	
+	public static boolean isDoublePrice(String str) {
+	    if (str == null) {
+	        return false;
+	    }
+	    int length = str.length();
+	    if (length == 0) {
+	        return false;
+	    }
+	    int i = 0;
+	    if (str.charAt(0) == '-') {
+	        return false;
+	    }
+	    int integerPartSize = 0;
+	    int exponentPartSize = -1;
+	    while (i < length) {
+	        char c = str.charAt(i);
+	        if (c < '0' || c > '9') {
+	            if (c == '.' && integerPartSize > 0 && exponentPartSize == -1) {
+	                exponentPartSize = 0;
+	            } else {
+	                return false;
+	            }
+	        } else if (exponentPartSize > -1) {
+	            ++exponentPartSize;
+	        } else {
+	            ++integerPartSize;
+	        }
+	        ++i;
+	    }
+	    if ((str.charAt(0) == '0' && i > 1 && exponentPartSize < 1)
+	            || exponentPartSize == 0 || (str.charAt(length - 1) == '.')) {
+	        return false;
+	    }
+	    return true;
 	}
 }

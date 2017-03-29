@@ -38,7 +38,9 @@ public class LoginServlet  extends HttpServlet{
 		try {
 			this.validateData(password, email);
 			HttpSession session = req.getSession();
-			session.setAttribute("USER", email);
+			User u = UserDAO.getInstance().getAllUsers().get(email);
+			session.setAttribute("user", u);
+			session.setAttribute("logged", true);
 		} catch (InvalidEmailException | InvalidPasswordException | SQLException | NotMatchingPasswordsException e) {
 			
 		}
