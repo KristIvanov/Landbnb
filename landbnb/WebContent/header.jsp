@@ -16,8 +16,8 @@
 	String link2 = "logIn.jsp";
 	String link3 = "logIn.jsp";%>
 	<div align = "right">
-	<% if(!session.isNew() && session.getAttributeNames()==null){
-		 logged = (Boolean) session.getAttribute("logged");
+	<% if(session.getAttribute("logged")!= null){
+		boolean logged = (Boolean) session.getAttribute("logged");
 		if(logged){
 			button1 = "View profile";
 			button2 = "Log out";
