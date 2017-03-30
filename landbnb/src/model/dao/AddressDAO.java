@@ -54,6 +54,7 @@ public class AddressDAO {
 		st.setInt(5, address.getApartment());
 		st.executeUpdate();
 		ResultSet rSet = st.getGeneratedKeys();
+		System.out.println("dali?");
 		while(rSet.next()){
 			address.setId(rSet.getLong(1));;
 		}

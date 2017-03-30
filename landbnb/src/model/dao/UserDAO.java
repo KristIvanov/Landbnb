@@ -29,7 +29,7 @@ public class UserDAO {
 			PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(sql);
 			ResultSet res = st.executeQuery();
 			while(res.next()){
-				User u = new User(res.getString("first_name"), res.getString("last_name"), res.getString("email"), res.getString("phone"), res.getString("password"), res.getDouble("rating"));
+				User u = new User(res.getString("first_name"), res.getString("last_name"), res.getString("email_address"), res.getString("phone"), res.getString("password"), res.getDouble("rating"));
 				u.setId(res.getLong("user_id"));
 				users.put(u.getMail(), u);
 			}

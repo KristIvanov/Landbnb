@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="controller.LoginServlet" %>
+<%@ page import="controller.LoginServlet,model.places.Address" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,15 +17,19 @@
 <h5 id = "error"><% out.println(AddAPlaceServlet.getErrorMsg());  %></h5>
 <form action="addaplace" method="post">
 <h3>Please enter short name</h3>
-Name: <input type="text" placeholder="enter name" name="name"><br>
+Name: <input type="text" placeholder="enter name" name="name" required><br>
 <h3>Please enter Address</h3>
-Region: <input type="text" placeholder="enter first name" name="region">
-City: <input type="text" placeholder="enter city" name="city">
-Street: <input type="text" placeholder="enter street" name="street">
-Number: <input type="text" placeholder="enter number" name="number">
-Apartment: <input type="text" placeholder="enter apartment" name="apartment"> 
+Region <select name = "region">
+		<% for(int i=0; i<Address.regions.length; i++){%>
+			<option value="<%out.print(Address.regions[i]);%>"><%out.print(Address.regions[i]);%></option>
+		<% }%>
+		</select>
+City: <input type="text" placeholder="enter city" name="city" required>
+Street: <input type="text" placeholder="enter street" name="street" required>
+Number: <input type="text" placeholder="enter number" name="number" required>
+Apartment: <input type="text" placeholder="enter apartment" name="apartment" required> 
 <h3>Please enter place details</h3><br>
-Max guests: <select name="maxGuests">
+Max guests: <select name="maxGuests" >
 <% for(int i=1; i<51; i++){ %>
 		<option value="<%out.print(i);%>"><%out.print(i);%></option>
 	<%} %>
@@ -40,12 +44,12 @@ Beds: <select name="beds">
 			<option value="<%out.print(i);%>"><%out.print(i);%></option>
 		<%} %>
 </select>
-Price per night: <input type="text" placeholder="enter price" name="pricePerNight"></br>
-Description: </br><textarea name="description" style="width:250px;height:150px;"></textarea>
+Price per night: <input type="text" placeholder="enter price" name="pricePerNight" required></br>
+Description: </br><textarea name="description" style="width:250px;height:150px; required"></textarea>
 </br>
 <h3>Please specify dates available</h3></br>
-Available from: <input type="date" placeholder="enter number" name="startDate">
-to: <input type="date" placeholder="enter number" name="endDate">
+Available from: <input type="date" placeholder="enter number" name="startDate" required>
+to: <input type="date" placeholder="enter number" name="endDate" required>
 <input type="submit" value = "AddAPlace"></br>
 </form>
 <a href="index.jsp">Back to home page.</a>

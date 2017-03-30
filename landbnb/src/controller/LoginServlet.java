@@ -44,8 +44,10 @@ public class LoginServlet  extends HttpServlet{
 		try {
 			this.validateData(password, email);
 			
-		} catch (InvalidEmailException | InvalidPasswordException | SQLException | NotMatchingPasswordsException e) {
-			
+		} catch (InvalidEmailException | InvalidPasswordException | NotMatchingPasswordsException e) {
+			System.out.println("login exception");
+		} catch (SQLException e) {
+			System.out.println("login sql exception");
 		}
 		finally {
 			HttpSession session = req.getSession();
@@ -54,8 +56,7 @@ public class LoginServlet  extends HttpServlet{
 			try {
 				u = UserDAO.getInstance().getAllUsers().get(email);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("sql exception");
 			}
 			session.setAttribute("mail", email);
 			session.setAttribute("user", u);

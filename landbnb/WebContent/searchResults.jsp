@@ -8,11 +8,12 @@
 <title>LandBNB - Search results</title>
 </head>
 <body>
-	<jsp:include page="header.jsp">
+	<jsp:include page="header.jsp"/>
 	<br>
 	<br>
 	<h2>Results</h2>
-	<% for(Offer f : SearchServlet.getOffers()){ %>
+	<% if (SearchServlet.getOffers().size() !=0){
+	for(Offer f : SearchServlet.getOffers()){ %>
 			<form method = "get" action = "offer">
 			snimchica
 			<h2>
@@ -28,6 +29,7 @@
 			<input type = "hidden" value = "<%out.print(f.getId());%>">
 			<input type = "submit" value = "View more" >
 			</form>
-		<%} %>>
+		<%} 
+		}%>>
 </body>
 </html>

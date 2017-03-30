@@ -31,7 +31,7 @@ public class OfferDAO {
 			allOffers = new HashMap<>();
 			if(allOffers.isEmpty()){
 				//take all offers
-				String sql = "SELECT id, start_of_period, end_of_period, fk_place_id FROM offers;";
+				String sql = "SELECT offer_id, start_of_period, end_of_period, fk_place_id FROM offers;";
 				PreparedStatement st;
 				try {
 					st = DBManager.getInstance().getConnection().prepareStatement(sql);

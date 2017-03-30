@@ -13,6 +13,7 @@
 	<br>
 	<br>
 	<h2>Search</h2>
+
 	<form action="search" method = "get">
 		Region <select name = "region">
 		<% for(int i=0; i<Address.regions.length; i++){%>

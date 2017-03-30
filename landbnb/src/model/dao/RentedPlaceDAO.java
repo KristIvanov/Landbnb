@@ -22,7 +22,7 @@ public class RentedPlaceDAO{
 	private RentedPlaceDAO() {
 		allPlaces = new HashMap<>();
 		if(allPlaces.isEmpty()){
-			String sql = "SELECT rented_place_id, name, max_guests, beds, rooms, price_per_night, rating, description, is_only_one_room, fk_address_id, fk_owner_id FROM rented_places;";
+			String sql = "SELECT rented_place_id, name, max_guests, beds, rooms, price_per_night, rating, description, is_only_one_room, fk_address_id, fk_host_id FROM rented_places;";
 			PreparedStatement st;
 			try {
 				st = DBManager.getInstance().getConnection().prepareStatement(sql);
@@ -38,7 +38,7 @@ public class RentedPlaceDAO{
 					String description = res.getString("description");
 					
 					User host = null;
-					String sql2 = "SELECT user_id, email_address, password, first_name, last_name, phone, rating  FROM user JOIN rented_places WHERE user_id = fk_owner_id;";
+					String sql2 = "SELECT user_id, email_address, password, first_name, last_name, phone, rating  FROM users JOIN rented_places WHERE user_id = fk_host_id;";
 					PreparedStatement st2 = DBManager.getInstance().getConnection().prepareStatement(sql2);
 					ResultSet res2 = st2.executeQuery();
 					while(res2.next()){
@@ -49,7 +49,9 @@ public class RentedPlaceDAO{
 					Address address = null;
 					String sql3 = "SELECT address_id, region, city, street, number, apartment FROM addresses JOIN rented_places WHERE address_id = fk_address_id;";
 					st = DBManager.getInstance().getConnection().prepareStatement(sql3);
+					
 					ResultSet res3 = st.executeQuery();
+					System.out.println("idvame tuk?");
 					while(res.next()){
 						address = new Address(res3.getString("region"), res3.getString("city"), res3.getString("street"), res3.getString("number"), res3.getInt("apartment"));
 						address.setId(res.getLong("id"));
@@ -79,7 +81,7 @@ public class RentedPlaceDAO{
 
 	public synchronized void addToDB(RentedPlace place) throws SQLException {
 		PreparedStatement st1;
-		String sql = "INSERT IGNORE INTO rented_places (name, max_guests, beds, rooms, price_per_night, rating, description, is_only_one_room, fk_address_id, fk_owner_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT IGNORE INTO rented_places (name, max_guests, beds, rooms, price_per_night, rating, description, is_only_one_room, fk_address_id, fk_host_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		st1 = DBManager.getInstance().getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		st1.setString(1, place.getName());
 		st1.setInt(2, place.getMaxGuests());
@@ -90,7 +92,10 @@ public class RentedPlaceDAO{
 		st1.setString(7, place.getDescription());
 		st1.setInt(8, (place.getRooms()==1)?1:0);
 		st1.setLong(9, place.getAddressObject().getId());
+		System.out.println(place.getHost().getFamilyName());
+		System.out.println(place.getHost().getId());
 		st1.setLong(10, place.getHost().getId());
+		System.out.println("do tuka idvame li");// ne idvame do tuka
 		st1.executeUpdate();
 		ResultSet rSet = st1.getGeneratedKeys();
 		while(rSet.next()){

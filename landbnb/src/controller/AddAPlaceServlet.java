@@ -18,6 +18,7 @@ import model.Offer;
 import model.dao.AddressDAO;
 import model.dao.OfferDAO;
 import model.dao.RentedPlaceDAO;
+import model.dao.UserDAO;
 import model.places.Address;
 import model.places.EntireHome;
 import model.places.RentedPlace;
@@ -45,7 +46,12 @@ public class AddAPlaceServlet extends HttpServlet{
 				//getting parameters
 				String name = req.getParameter("name");
 				HttpSession session = req.getSession();
-				User user = (User) session.getAttribute("user");
+				User user = null;
+				try {
+					user = UserDAO.getInstance().getAllUsers().get(session.getAttribute("mail"));
+				} catch (SQLException e1) {
+					System.out.println("user not found");
+				}
 				String region = req.getParameter("region");
 				String city = req.getParameter("city");
 				String street = req.getParameter("street");
@@ -98,7 +104,7 @@ public class AddAPlaceServlet extends HttpServlet{
 				
 				//create offer
 				
-				SimpleDateFormat in = new SimpleDateFormat("dd/MM/yyyy");
+				SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
 				String parameter = req.getParameter("startDate");
 				Date date;
 				try {
@@ -107,9 +113,12 @@ public class AddAPlaceServlet extends HttpServlet{
 					String parameter2 = req.getParameter("endDate");
 					date = in.parse(parameter2);
 					LocalDateTime date2 = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-					Offer offer = new Offer(place, (Host)user, date1.toLocalDate(), date2.toLocalDate());
-					OfferDAO.add(offer);
-					
+					if(user == null){
+						System.out.println("user-a e null");
+					}
+					Offer offer = new Offer(place, user.beHost(), date1.toLocalDate(), date2.toLocalDate());
+					System.out.println(offer.getStartOfPeriod());
+					OfferDAO.getInstance().add(offer);
 					//addAddress to db
 					try{
 						AddressDAO.getInstance().addToDB(address);
@@ -134,7 +143,7 @@ public class AddAPlaceServlet extends HttpServlet{
 					
 				} catch (ParseException e) {
 					System.out.println("Wrong input details");
-					resp.sendRedirect("addAPlace.jsp");
+					errorMsg = "Invalid input details";
 				}
 				resp.sendRedirect("index.jsp");
 			}
