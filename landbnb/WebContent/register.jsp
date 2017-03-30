@@ -8,9 +8,11 @@
 <title>Register</title>
 </head>
 <body>
-<!-- insert register form here that makes POST request to RegisterServlet -->
+<jsp:include page="header.jsp" />
+<br>
+<br>
 
-<h3>Please register a new account</h3>
+<h2>Please register a new account</h2>
 <h5 id = "error"><% out.println(RegisterServlet.getErrorMsg());  %></h5>
 <form action="register" method="post">
 Email: <input type="text" placeholder="enter email" name="email"></br>

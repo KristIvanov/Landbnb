@@ -62,5 +62,7 @@ public class UserDAO {
 		PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(sql);
 		st.executeUpdate();
 	}
+	
+	
 
 }

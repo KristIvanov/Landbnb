@@ -29,6 +29,7 @@ public class LoginServlet  extends HttpServlet{
 	public static String getErrorMsg() {
 		return errorMsg;
 	}
+	
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -52,7 +53,6 @@ public class LoginServlet  extends HttpServlet{
 			user.setMaxAge(30*60);
 			resp.addCookie(user);
 		} catch (InvalidEmailException | InvalidPasswordException | SQLException | NotMatchingPasswordsException e) {
-			
 		}
 		finally {
 			resp.sendRedirect(fileName);
@@ -81,4 +81,5 @@ public class LoginServlet  extends HttpServlet{
 			throw new NotMatchingPasswordsException();
 		}
 	}
+	
 }

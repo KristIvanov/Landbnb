@@ -8,26 +8,25 @@
 <title>LandBNB</title>
 </head>
 <body>
-	<H4 align = "right">
-		<a href="logIn.jsp">Log in</a>
-		<a href="register.jsp">Register</a>
-		<a href="addAPlace.jsp">Become a Host</a>
-		<a href="profile.jsp">Profile</a>
-	</H4>
-	<font face="Verdana" size="7">LandBNB</font><br />
+
+	<jsp:include page="header.jsp" />
+	<br>
+	<br>
+	<h2>Search</h2>
+>>>>>>> Stashed changes
 	<form action="search" method = "get">
 		Region <select name = "region">
 		<% for(int i=0; i<Address.regions.length; i++){%>
 			<option value="<%out.print(Address.regions[i]);%>"><%out.print(Address.regions[i]);%></option>
 		<% }%>
-		</select></br>
-		Check in <input type="date" placeholder="Check in" name="startDate"></br>
-		Check out <input type="date" placeholder="Check out" name="endDate"></br>
+		</select>
+		Check in <input type="date" placeholder="Check in" name="startDate" required>
+		Check out <input type="date" placeholder="Check out" name="endDate" required>
 		Guests <select name = "guests">
 		<% for(int i=1; i<51; i++){ %>
 			<option value="<%out.print(i);%>"><%out.print(i);%></option>
 		<%} %>
-		</select></br>
+		</select>
 		<input type="submit" value="Search">
 	</form>
 </body>

@@ -8,7 +8,10 @@
 <title>Log in</title>
 </head>
 <body>
-<h3>Please login</h3>
+<jsp:include page="header.jsp" />
+<br>
+<br>
+<h2>Please login</h2>
 <h5 id = "error"><% out.println(LoginServlet.getErrorMsg());  %></h5>
 <form action="login" method="post">
 Email: <input type="text" placeholder="enter email" name="email" required="required"></br>

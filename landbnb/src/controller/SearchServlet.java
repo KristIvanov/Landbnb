@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -22,7 +23,7 @@ import model.dao.OfferDAO;
 public class SearchServlet extends HttpServlet{
 	
 	private static String filename = "searchResults.jsp";
-
+	private static ArrayList<Offer> offersForYou;
 	/**
 	 * 
 	 */
@@ -55,7 +56,7 @@ public class SearchServlet extends HttpServlet{
 			LocalDateTime date1 = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 			date = in.parse(parameter2);
 			LocalDateTime date2 = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-			ArrayList<Offer> offersforYou = OfferDAO.getInstance().search(region, date1.toLocalDate(), date2.toLocalDate(), guestsNum);
+			offersForYou = OfferDAO.getInstance().search(region, date1.toLocalDate(), date2.toLocalDate(), guestsNum);
 			//	TODO redirect & somehow print each offer in the page
 		} catch (ParseException e) {
 			System.out.println("Invalid input");
@@ -70,5 +71,10 @@ public class SearchServlet extends HttpServlet{
 			 if (c < '0' || c > '9') isnumber = false;
 		}
 		return isnumber;
+	}
+	
+	public static ArrayList<Offer> getOffers(){
+		ArrayList<Offer> val;
+		return val = (ArrayList<Offer>) Collections.unmodifiableCollection(offersForYou);
 	}
 }

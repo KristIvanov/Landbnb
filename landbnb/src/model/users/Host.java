@@ -61,6 +61,11 @@ public class Host extends User{
 		}
 		
 	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.firstName + this.familyName;
+	}
 	
 	
 

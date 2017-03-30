@@ -60,6 +60,10 @@ public class Offer {
 		this.id = id;
 	}
 	
+	public long getId(){
+		return this.id;
+	}
+	
 	
 
 }
