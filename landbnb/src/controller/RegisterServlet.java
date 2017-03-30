@@ -35,7 +35,7 @@ public class RegisterServlet extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//add New user to DB and HashMap
+		
 		
 		String firstName = req.getParameter("firstName");
 		String familyName = req.getParameter("familyName");
@@ -48,6 +48,7 @@ public class RegisterServlet extends HttpServlet{
 			this.validateData(firstName, familyName, password, reenteredPass, email, phoneNumber);
 			User user = new User(firstName, familyName, email, phoneNumber, UserDAO.getInstance().hashPassword(password), 0.0);
 			UserDAO.getInstance().addUser(user);
+			UserDAO.getInstance().getAllUsers().put(email, user);
 		} catch (InvalidEmailException | InvalidNameException | InvalidPasswordException | NotMatchingPasswordsException
 				| InvalidPhoneNumberException | UserAlreadyExistsException | SQLException e) {
 		}

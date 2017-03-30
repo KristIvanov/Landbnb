@@ -138,13 +138,13 @@ public class AddAPlaceServlet extends HttpServlet{
 				
 			}
 			else{
-				resp.sendRedirect("index.html");
+				resp.sendRedirect("login.jsp");
 			}
 
 
 		}
 		else{
-			resp.sendRedirect("index.html");
+			resp.sendRedirect("login.jsp");
 		}
 
 		

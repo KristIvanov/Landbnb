@@ -12,13 +12,9 @@
 
 <h3>Hello</h3>
 <h5 id = "error"><% out.println(ProfileServlet.getMsg());  %></h5>
-<form action="changepass" method="post">
-<input type="submit" value="Change Password">
-</form>
+<a href="changeMail.html">Change Your email</a>
 <br>
-<form action="changemail" method="post">
-<input type="submit" value="Change Mail">
-</form>
+<a href="changePass.html">Change your password</a>
 <br>
 <form action="logout" method="get">
 <input type="submit" value="Log Out">

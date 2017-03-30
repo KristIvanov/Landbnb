@@ -34,11 +34,11 @@ public class ProfileServlet extends HttpServlet {
 				response.getWriter().append(mail);
 			}
 			else{
-				response.sendRedirect("index.html");
+				response.sendRedirect("login.jsp");
 			}
 		}
 		else{
-			response.sendRedirect("index.html");
+			response.sendRedirect("login.jsp");
 		}
 	}
 
