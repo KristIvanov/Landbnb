@@ -43,18 +43,27 @@ public class LoginServlet  extends HttpServlet{
 		
 		try {
 			this.validateData(password, email);
+			
+		} catch (InvalidEmailException | InvalidPasswordException | SQLException | NotMatchingPasswordsException e) {
+			
+		}
+		finally {
 			HttpSession session = req.getSession();
 			session.setMaxInactiveInterval(5*60);
-			User u = UserDAO.getInstance().getAllUsers().get(email);
+			User u = null;
+			try {
+				u = UserDAO.getInstance().getAllUsers().get(email);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			session.setAttribute("mail", email);
 			session.setAttribute("user", u);
 			session.setAttribute("logged", true);
 			Cookie user = new Cookie("mail", email);
 			user.setMaxAge(30*60);
 			resp.addCookie(user);
-		} catch (InvalidEmailException | InvalidPasswordException | SQLException | NotMatchingPasswordsException e) {
-		}
-		finally {
+
 			resp.sendRedirect(fileName);
 			errorMsg = " ";
 		}

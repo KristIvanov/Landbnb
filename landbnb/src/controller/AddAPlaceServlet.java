@@ -134,8 +134,9 @@ public class AddAPlaceServlet extends HttpServlet{
 					
 				} catch (ParseException e) {
 					System.out.println("Wrong input details");
+					resp.sendRedirect("addAPlace.jsp");
 				}
-				
+				resp.sendRedirect("index.jsp");
 			}
 			else{
 				resp.sendRedirect("logIn.jsp");
