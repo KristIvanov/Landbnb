@@ -10,8 +10,8 @@ public class DBManager {
 	private static final String DB_IP = "localhost";
 	private static final String DB_PORT = "3306";
 	private static final String DB_NAME = "mydb";
-	private static final String DB_USER = "landBNBClient";
-	private static final String DB_PASS = "landbnbclient";
+	private static final String DB_USER = "user";
+	private static final String DB_PASS = "userbnb";
 	private Connection con = null;
 	
 	private DBManager() {
