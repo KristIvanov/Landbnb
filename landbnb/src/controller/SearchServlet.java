@@ -47,7 +47,7 @@ public class SearchServlet extends HttpServlet{
 			errorMsg = "Invalid number of guests";
 		}
 		
-		SimpleDateFormat in = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat in = new SimpleDateFormat("yyyy/MM/dd");
 		String parameter = req.getParameter("startDate");
 		String parameter2 = req.getParameter("endDate");
 		Date date;
@@ -74,7 +74,10 @@ public class SearchServlet extends HttpServlet{
 	}
 	
 	public static ArrayList<Offer> getOffers(){
-		ArrayList<Offer> val;
-		return val = (ArrayList<Offer>) Collections.unmodifiableCollection(offersForYou);
+		ArrayList<Offer> val = (ArrayList<Offer>) Collections.unmodifiableCollection(offersForYou);
+		if(val == null){
+			System.out.println("kak stana taka");
+		}
+		return val;
 	}
 }

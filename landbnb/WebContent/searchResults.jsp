@@ -12,24 +12,30 @@
 	<br>
 	<br>
 	<h2>Results</h2>
-	<% if (SearchServlet.getOffers().size() !=0){
-	for(Offer f : SearchServlet.getOffers()){ %>
+	<table border = "1">
+	<% if (!SearchServlet.getOffers().isEmpty()){
+		for(Offer f : SearchServlet.getOffers()){ %>
+			
+			
+			<tr>
+				<td>
+			<%out.print(f.getPlace().getName());%>
+			Host: <%out.print(f.getHost().toString()); %> 
+			Address: <%out.print(f.getPlace().getAddress().toString()); %>
+			Max Guests: <%out.print(f.getPlace().getMaxGuests()); %>
+			Rooms: <%out.print(f.getPlace().getRooms()); %>
+			Beds: <%out.print(f.getPlace().getBeds()); %>
+			Rating :<%out.print(f.getPlace().getRating()); %>
+			Price per Night: <%out.print(f.getPlace().getPricePerNight()); %>
 			<form method = "get" action = "offer">
-			snimchica
-			<h2>
-			<%out.print(f.getPlace().getName());%><br></h2>
-			<h3>
-			Host: <%out.print(f.getHost().toString()); %><br> 
-			Address: <%out.print(f.getPlace().getAddress().toString()); %><br>
-			Max Guests: <%out.print(f.getPlace().getMaxGuests()); %><br>
-			Rooms: <%out.print(f.getPlace().getRooms()); %><br>
-			Beds: <%out.print(f.getPlace().getBeds()); %><br>
-			Rating :<%out.print(f.getPlace().getRating()); %><br>
-			Price per Night: <%out.print(f.getPlace().getPricePerNight()); %><br></h3>
 			<input type = "hidden" value = "<%out.print(f.getId());%>">
 			<input type = "submit" value = "View more" >
 			</form>
+			<td>
+			<tr>
+			
 		<%} 
-		}%>>
+		}%>
+	</table>
 </body>
 </html>
