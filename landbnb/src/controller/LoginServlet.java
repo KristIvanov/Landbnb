@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,8 +45,12 @@ public class LoginServlet  extends HttpServlet{
 			HttpSession session = req.getSession();
 			session.setMaxInactiveInterval(5*60);
 			User u = UserDAO.getInstance().getAllUsers().get(email);
+			session.setAttribute("mail", email);
 			session.setAttribute("user", u);
 			session.setAttribute("logged", true);
+			Cookie user = new Cookie("mail", email);
+			user.setMaxAge(30*60);
+			resp.addCookie(user);
 		} catch (InvalidEmailException | InvalidPasswordException | SQLException | NotMatchingPasswordsException e) {
 			
 		}

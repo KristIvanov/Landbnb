@@ -29,7 +29,7 @@ public class ProfileServlet extends HttpServlet {
 			boolean logged = (Boolean) request.getSession().getAttribute("logged");
 			if(logged){
 				User user = (User) request.getSession().getAttribute("user");
-				String mail = "<h3>" + user.getMail()+"</h3>";
+				String mail = "<h3>" + (String) request.getSession().getAttribute("mail") + "</h3>";
 				ProfileServlet.Msg = user.getName();
 				response.getWriter().append(mail + "test");
 			}
