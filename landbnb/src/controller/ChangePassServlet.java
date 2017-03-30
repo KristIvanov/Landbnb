@@ -47,11 +47,11 @@ public class ChangePassServlet extends HttpServlet {
 				}
 			}
 			else{
-				response.sendRedirect("login.jsp");
+				response.sendRedirect("logIn.jsp");
 			}
 		}
 		else{
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("logIn.jsp");
 		}
 		
 	}

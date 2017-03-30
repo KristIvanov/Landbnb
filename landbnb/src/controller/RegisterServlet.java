@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -26,7 +27,7 @@ import model.users.Validator;
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet{
 	
-	private static String fileName = "index.html";
+	private static String fileName = "index.jsp";
 	private static String errorMsg = " ";
 
 	public static String getErrorMsg() {
@@ -49,6 +50,9 @@ public class RegisterServlet extends HttpServlet{
 			User user = new User(firstName, familyName, email, phoneNumber, UserDAO.getInstance().hashPassword(password), 0.0);
 			UserDAO.getInstance().addUser(user);
 			UserDAO.getInstance().getAllUsers().put(email, user);
+			HttpSession session = req.getSession();
+			session.setAttribute("user", user);
+			session.setAttribute("logged", true);
 		} catch (InvalidEmailException | InvalidNameException | InvalidPasswordException | NotMatchingPasswordsException
 				| InvalidPhoneNumberException | UserAlreadyExistsException | SQLException e) {
 		}
@@ -66,10 +70,10 @@ public class RegisterServlet extends HttpServlet{
 			fileName = "register.jsp";
 			throw new InvalidEmailException();
 		}
-		//if(UserDAO.getInstance().getAllUsers().containsKey(email)){
-		//	errorMsg = "Email already in use";
-		//	throw new UserAlreadyExistsException();
-		//}
+		if(UserDAO.getInstance().getAllUsers().containsKey(email)){
+			errorMsg = "Email already in use";
+			throw new UserAlreadyExistsException();
+		}
 		if(!Validator.isValidName(firstName)||!Validator.isValidName(familyName)){
 			errorMsg = "Invalid names. Must start with Upper case and contain only lower cases after";
 			fileName = "register.jsp";

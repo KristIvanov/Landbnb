@@ -45,11 +45,11 @@ public class BeAHostServlet extends HttpServlet{
 				resp.sendRedirect("addaplace.html");
 			}
 			else{
-				resp.sendRedirect("login.jsp");
+				resp.sendRedirect("logIn.jsp");
 			}
 		}
 		else{
-			resp.sendRedirect("login.jsp");
+			resp.sendRedirect("logIn.jsp");
 		}
 		
 		

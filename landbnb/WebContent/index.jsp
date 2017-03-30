@@ -12,6 +12,7 @@
 		<a href="logIn.jsp">Log in</a>
 		<a href="register.jsp">Register</a>
 		<a href="addAPlace.jsp">Become a Host</a>
+		<a href="profile.jsp">Profile</a>
 	</H4>
 	<font face="Verdana" size="7">LandBNB</font><br />
 	<form action="search" method = "get">

@@ -22,7 +22,7 @@ import model.users.User;
 @WebServlet("/login")
 public class LoginServlet  extends HttpServlet{
 	
-	public static String fileName = "index.html";
+	public static String fileName = "index.jsp";
 	public static String errorMsg = "";
 	
 	public static String getErrorMsg() {
@@ -34,22 +34,26 @@ public class LoginServlet  extends HttpServlet{
 		String email;
 		String password;
 		
+		
 		email = req.getParameter("email");
 		password = req.getParameter("pass");
+		
 		
 		try {
 			this.validateData(password, email);
 			HttpSession session = req.getSession();
+			session.setMaxInactiveInterval(5*60);
 			User u = UserDAO.getInstance().getAllUsers().get(email);
 			session.setAttribute("user", u);
 			session.setAttribute("logged", true);
 		} catch (InvalidEmailException | InvalidPasswordException | SQLException | NotMatchingPasswordsException e) {
 			
 		}
+		finally {
+			resp.sendRedirect(fileName);
+			errorMsg = " ";
+		}
 		
-		RequestDispatcher rd = req.getRequestDispatcher(fileName);
-		rd.forward(req, resp);
-		errorMsg = " ";
 	}
 	
 	private  void validateData(String inputPass, String email)
@@ -57,17 +61,18 @@ public class LoginServlet  extends HttpServlet{
 		
 		if(email.isEmpty()||!EmailValidator.getInstance().isValid(email)){
 			errorMsg = "Invalid email address";
-			fileName = "register.jsp";
+			fileName = "logIn.jsp";
 			throw new InvalidEmailException();
 		}
 		if(!UserDAO.getInstance().getAllUsers().containsKey(email)){
 			errorMsg = "Wrong email address";
+			fileName = "logIn.jsp";
 		}
 		User user = UserDAO.getInstance().getAllUsers().get(email);
 		
 		if(!UserDAO.getInstance().hashPassword(inputPass).equals(user.getPassword())){
-			errorMsg = "Wrong passoword for email: "+email;
-			fileName = "register.jsp";
+			errorMsg = "Wrong password for email: " + email;
+			fileName = "logIn.jsp";
 			throw new NotMatchingPasswordsException();
 		}
 	}

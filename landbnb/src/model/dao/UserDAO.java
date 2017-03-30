@@ -40,7 +40,7 @@ public class UserDAO {
 	public synchronized void addUser(User user) throws SQLException{ 
 		String sql = "INSERT INTO users (email_address, password, first_name, last_name, phone, rating) values (?, ?, ?, ?, ?, 0.0)";
 		PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(sql);
-		st.setString(1, user.getName());
+		st.setString(1, user.getMail());
 		st.setString(2, user.getPassword());
 		st.setString(3, user.getFirstName());//TODO hash pass
 		st.setString(4, user.getFamilyName());//TODO hash pass

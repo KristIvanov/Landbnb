@@ -45,6 +45,6 @@ Available from: <input type="date" placeholder="enter number" name="startDate">
 to: <input type="date" placeholder="enter number" name="endDate">
 <input type="submit" value = "AddAPlace"></br>
 </form>
-<a href="index.html">Back to home page.</a>
+<a href="index.jsp">Back to home page.</a>
 </body>
 </html>

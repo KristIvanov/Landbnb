@@ -10,11 +10,11 @@
 <body>
 <!--  -->
 
-<h3>Hello</h3>
-<h5 id = "error"><% out.println(ProfileServlet.getMsg());  %></h5>
-<a href="changeMail.html">Change Your email</a>
+<h3>Hello <% out.append(ProfileServlet.getMsg() + "test");%></h3>
+<h5 > </h5>
+<a href="changeMail.jsp">Change Your email</a>
 <br>
-<a href="changePass.html">Change your password</a>
+<a href="changePass.jsp">Change your password</a>
 <br>
 <form action="logout" method="get">
 <input type="submit" value="Log Out">
