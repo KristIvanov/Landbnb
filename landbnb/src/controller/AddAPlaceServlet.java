@@ -98,7 +98,7 @@ public class AddAPlaceServlet extends HttpServlet{
 				
 				//create offer
 				
-				SimpleDateFormat in = new SimpleDateFormat("dd/MM/yyyy");
+				SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
 				String parameter = req.getParameter("startDate");
 				Date date;
 				try {
@@ -108,7 +108,8 @@ public class AddAPlaceServlet extends HttpServlet{
 					date = in.parse(parameter2);
 					LocalDateTime date2 = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 					Offer offer = new Offer(place, (Host)user, date1.toLocalDate(), date2.toLocalDate());
-					OfferDAO.add(offer);
+					System.out.println(offer.getStartOfPeriod());
+					OfferDAO.getInstance().add(offer);
 					
 					//addAddress to db
 					try{
@@ -134,7 +135,7 @@ public class AddAPlaceServlet extends HttpServlet{
 					
 				} catch (ParseException e) {
 					System.out.println("Wrong input details");
-					resp.sendRedirect("addAPlace.jsp");
+					errorMsg = "Invalid input details";
 				}
 				resp.sendRedirect("index.jsp");
 			}

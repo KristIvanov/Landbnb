@@ -38,7 +38,7 @@ public class RentedPlaceDAO{
 					String description = res.getString("description");
 					
 					User host = null;
-					String sql2 = "SELECT user_id, email_address, password, first_name, last_name, phone, rating  FROM user JOIN rented_places WHERE user_id = fk_owner_id;";
+					String sql2 = "SELECT user_id, email_address, password, first_name, last_name, phone, rating  FROM users JOIN rented_places WHERE user_id = fk_host_id;";
 					PreparedStatement st2 = DBManager.getInstance().getConnection().prepareStatement(sql2);
 					ResultSet res2 = st2.executeQuery();
 					while(res2.next()){
@@ -90,6 +90,8 @@ public class RentedPlaceDAO{
 		st1.setString(7, place.getDescription());
 		st1.setInt(8, (place.getRooms()==1)?1:0);
 		st1.setLong(9, place.getAddressObject().getId());
+		System.out.println(place.getHost().getFamilyName());
+		System.out.println(place.getHost().getId());
 		st1.setLong(10, place.getHost().getId());
 		st1.executeUpdate();
 		ResultSet rSet = st1.getGeneratedKeys();
