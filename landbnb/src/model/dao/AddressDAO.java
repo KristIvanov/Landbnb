@@ -28,8 +28,9 @@ public class AddressDAO {
 					st = DBManager.getInstance().getConnection().prepareStatement(sql);
 					ResultSet res = st.executeQuery();
 					while(res.next()){
+						System.out.println("yo");
 						Address address = new Address(res.getString("region"), res.getString("city"), res.getString("street"), res.getString("number"), res.getInt("apartment"));
-						address.setId(res.getLong("id"));
+						address.setId(res.getLong("address_id"));
 						allAddresses.put(address.getId(), address);
 					}
 				} catch (SQLException e) {

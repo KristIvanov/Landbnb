@@ -118,16 +118,19 @@ public class AddAPlaceServlet extends HttpServlet{
 					}
 					Offer offer = new Offer(place, user.beHost(), date1.toLocalDate(), date2.toLocalDate());
 					System.out.println(offer.getStartOfPeriod());
-					OfferDAO.getInstance().add(offer);
+					
 					//addAddress to db
 					try{
+						System.out.println("addresses loading");
 						AddressDAO.getInstance().addToDB(address);
+						System.out.println("addresses loaded");
 					} catch(SQLException ex){
 						System.out.println("Error adding address to DB ");
 					}
 					
 					//addPlace to db
 					try{
+						System.out.println("palces loading");
 						RentedPlaceDAO.getInstance().addToDB(place);
 					} catch(SQLException ex){
 						System.out.println("Error adding place to DB ");
@@ -140,7 +143,7 @@ public class AddAPlaceServlet extends HttpServlet{
 						System.out.println("Error adding offer to DB ");
 					}
 					
-					
+					OfferDAO.getInstance().add(offer);
 				} catch (ParseException e) {
 					System.out.println("Wrong input details");
 					errorMsg = "Invalid input details";
