@@ -95,7 +95,6 @@ public class RentedPlaceDAO{
 		System.out.println(place.getHost().getFamilyName());
 		System.out.println(place.getHost().getId());
 		st1.setLong(10, place.getHost().getId());
-		System.out.println("do tuka idvame li");// ne idvame do tuka
 		st1.executeUpdate();
 		ResultSet rSet = st1.getGeneratedKeys();
 		while(rSet.next()){

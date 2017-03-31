@@ -47,7 +47,7 @@ public class SearchServlet extends HttpServlet{
 			errorMsg = "Invalid number of guests";
 		}
 		
-		SimpleDateFormat in = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
 		String parameter = req.getParameter("startDate");
 		String parameter2 = req.getParameter("endDate");
 		Date date;
@@ -57,10 +57,12 @@ public class SearchServlet extends HttpServlet{
 			date = in.parse(parameter2);
 			LocalDateTime date2 = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 			offersForYou = OfferDAO.getInstance().search(region, date1.toLocalDate(), date2.toLocalDate(), guestsNum);
-			//	TODO redirect & somehow print each offer in the page
+			if(offersForYou.isEmpty()){
+				filename = "nothingMatches.html";
+			}
 		} catch (ParseException e) {
 			System.out.println("Invalid input");
-			//TODO different response?
+			//filename = "index.jsp";
 		}
 		resp.sendRedirect(filename);
 	}
@@ -75,9 +77,6 @@ public class SearchServlet extends HttpServlet{
 	
 	public static ArrayList<Offer> getOffers(){
 		ArrayList<Offer> val = (ArrayList<Offer>) Collections.unmodifiableCollection(offersForYou);
-		if(val == null){
-			System.out.println("kak stana taka");
-		}
 		return val;
 	}
 }

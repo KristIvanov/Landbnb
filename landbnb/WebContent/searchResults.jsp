@@ -27,11 +27,11 @@
 			Beds: <%out.print(f.getPlace().getBeds()); %>
 			Rating :<%out.print(f.getPlace().getRating()); %>
 			Price per Night: <%out.print(f.getPlace().getPricePerNight()); %>
-			<form method = "get" action = "offer">
-			<input type = "hidden" value = "<%out.print(f.getId());%>">
-			<input type = "submit" value = "View more" >
-			</form>
-			<td>
+					<form method = "get" action = "book">
+						<input type = "hidden" value = "<%out.print(f.getId());%>" name = "offerId">
+						<input type = "submit" value = "Book" >
+					</form>
+				</td>
 			<tr>
 			
 		<%} 

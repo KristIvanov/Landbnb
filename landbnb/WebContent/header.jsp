@@ -28,6 +28,7 @@
 		}
 	}
 	%>
+		<%= session.getAttribute("mail") %>
 		<a href = "<%= link1%>" ><%= button1%></a>
 		<a href = "<%= link2%>" ><%= button2%></a>
 		<a href = "<%= link3%>" ><%= button3%></a>

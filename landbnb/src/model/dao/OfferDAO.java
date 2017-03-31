@@ -21,7 +21,7 @@ import model.users.User;
 public class OfferDAO {
 	
 	private static OfferDAO instance;
-	private static HashMap<LocalDate, HashMap<String, Offer>> allOffers; //subkey address
+	public static HashMap<LocalDate, HashMap<String, Offer>> allOffers; //subkey address
 	
 	private OfferDAO() {}
 	
@@ -83,7 +83,7 @@ public class OfferDAO {
 		}
 	}
 	
-	public static synchronized ArrayList<Offer> search(String address, LocalDate start, LocalDate end, int guests){
+	public synchronized ArrayList<Offer> search(String address, LocalDate start, LocalDate end, int guests){
 		
 		ArrayList<Offer> offersForYou = new ArrayList<>();
 		
