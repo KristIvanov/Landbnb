@@ -15,8 +15,7 @@
 	String link1 = "register.jsp";
 	String link2 = "logIn.jsp";
 	String link3 = "logIn.jsp";%>
-	<div align = "right">
-	<% if(session.getAttribute("logged")!= null){
+	<% if(session.getAttribute("logged")!=null){
 		logged = (Boolean) session.getAttribute("logged");
 		if(logged){
 			button1 = "View profile";
@@ -26,9 +25,15 @@
 			link2 = "logout.jsp";
 			link3 = "addAPlace.jsp";
 		}
+		else{
+			
+		}
 	}
 	%>
-		<%= session.getAttribute("mail") %>
+	<div align = "right">
+	<% if (session.getAttribute("mail")!=null){ %>
+	<%= session.getAttribute("mail") %>
+	<% } %>
 		<a href = "<%= link1%>" ><%= button1%></a>
 		<a href = "<%= link2%>" ><%= button2%></a>
 		<a href = "<%= link3%>" ><%= button3%></a>

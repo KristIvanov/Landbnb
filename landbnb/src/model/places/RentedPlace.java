@@ -3,13 +3,14 @@ package model.places;
 import java.util.ArrayList;
 
 import model.interactions.Review;
+import model.users.Host;
 import model.users.IReceiveReview;
 import model.users.User;
 
 public abstract class RentedPlace implements IReceiveReview{
 	
 	protected String name;
-	protected User host;
+	protected Host host;
 	protected Address address;
 	protected int maxGuests;
 	protected int beds;
@@ -23,7 +24,7 @@ public abstract class RentedPlace implements IReceiveReview{
 	
 	//TODO STRING TO ENUM address!!!
 	
-	public RentedPlace(String name, User host, Address address, int maxGuests, int beds, double pricePerNight, String description) {
+	public RentedPlace(String name, Host host, Address address, int maxGuests, int beds, double pricePerNight, String description) {
 		this.host = host;
 		if (address != null) this.address = address;
 		if (name != null && !name.isEmpty())this.name = name;
@@ -59,7 +60,7 @@ public abstract class RentedPlace implements IReceiveReview{
 	public int getBeds() {
 		return beds;
 	}
-	public User getHost() {
+	public Host getHost() {
 		return host;
 	}
 	

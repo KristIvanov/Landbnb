@@ -23,61 +23,52 @@ public class OfferDAO {
 	
 	private static OfferDAO instance;
 	public static HashMap<LocalDate, HashMap<String, Offer>> allOffers; //subkey address
+	public static ArrayList<Offer> allOffers1;
 	
-	private OfferDAO() {}
+	private OfferDAO() {
+			allOffers1 = new ArrayList<>();
+			System.out.println("0");
+			String sql = "SELECT offer_id, start_of_period, end_of_period, fk_place_id FROM offers;";
+			PreparedStatement st;
+			try {
+				st = DBManager.getInstance().getConnection().prepareStatement(sql);
+				ResultSet res = st.executeQuery();
+				System.out.println("0");
+				while(res.next()){//for each offer
+					System.out.println("1st");
+					long placeId = res.getLong("fk_place_id");
+					RentedPlace place = null;
+					Host host = null;
+					long offerId = res.getLong("offer_id");
+					//take their places
+					for (RentedPlace r : RentedPlaceDAO.getInstance().getPlacesList()){
+						if(r.getId()== placeId){
+							place = r;
+							host = r.getHost();
+						}
+					}
+					
+					
+					Offer offer = new Offer(place, host, res.getDate("start_of_period").toLocalDate(), res.getDate("end_of_period").toLocalDate());
+					offer.setId(offerId);
+					System.out.println("7");
+					OfferDAO.add(offer);
+					//allOffers.put(res.getDate("start_of_period").toLocalDate(), new HashMap<>());
+					//allOffers.get(res.getDate("start_of_period").toLocalDate()).put(place.getAddress(), offer);
+				}
+			} catch (SQLException e) {
+			}
+		
+	}
 	
 	public static synchronized OfferDAO getInstance(){
-		if (instance == null){
-			instance = new OfferDAO();
-			allOffers = new HashMap<>();
-			if(allOffers.isEmpty()){
-				//take all offers
-				System.out.println("0");
-				String sql = "SELECT offer_id, start_of_period, end_of_period, fk_place_id FROM offers;";
-				PreparedStatement st;
-				try {
-					st = DBManager.getInstance().getConnection().prepareStatement(sql);
-					ResultSet res = st.executeQuery();
-					System.out.println("0");
-					while(res.next()){//for each offer
-						System.out.println("1st");
-						//take their places
-						long offerId = res.getLong("offer_id");
-						System.out.println("2");
-						sql = "SELECT rented_place_id, name, max_guests, beds, rooms, price_per_night, rented_places.rating, description, is_only_one_room, fk_address_id, fk_host_id FROM rented_places JOIN offers WHERE rented_place_id = ?;";
-						PreparedStatement st1 = DBManager.getInstance().getConnection().prepareStatement(sql);
-						System.out.println("3");
-						st1.setLong(1, offerId);
-						System.out.println("4");
-						ResultSet res1 = st1.executeQuery();
-						long addressId = res1.getLong("fk_address_id");
-						System.out.println("5");
-						Address address = AddressDAO.getInstance().getAllAddresses().get(addressId);
-						RentedPlace place = RentedPlaceDAO.getInstance().getAllPlaces().get(address);
-						System.out.println("6");
-						User host = place.getHost();
-						Offer offer = new Offer(place, (Host) host, res.getDate("start_of_period").toLocalDate(), res.getDate("end_of_period").toLocalDate());
-						offer.setId(offerId);
-						System.out.println("7");
-						allOffers.put(res.getDate("start_of_period").toLocalDate(), new HashMap<>());
-						allOffers.get(res.getDate("start_of_period").toLocalDate()).put(place.getAddress(), offer);
-					}
-				} catch (SQLException e) {
-					System.out.println(e.getMessage());
-					System.out.println("tuk e");
-				}
-				
-			}
-
-			
-		}
 		return instance;
 	}
 
 	public static synchronized void add(Offer offer) {
-		allOffers.put(offer.getStartOfPeriod(), new HashMap<>());
-		allOffers.get(offer.getStartOfPeriod()).put(offer.getPlace().getAddress(), offer);
-		
+		//allOffers.put(offer.getStartOfPeriod(), new HashMap<>());
+		//allOffers.get(offer.getStartOfPeriod()).put(offer.getPlace().getAddress(), offer);
+		allOffers1.add(offer);
 	}
 
 	public synchronized void addToDB(Offer offer, LocalDateTime date1, LocalDateTime date2) throws SQLException {
@@ -99,7 +90,10 @@ public class OfferDAO {
 		
 		ArrayList<Offer> offersForYou = new ArrayList<>();
 		
-		for (Iterator<Entry<LocalDate, HashMap<String, Offer>>> it = allOffers.entrySet().iterator(); it.hasNext();){
+		
+		
+		
+		/*for (Iterator<Entry<LocalDate, HashMap<String, Offer>>> it = allOffers.entrySet().iterator(); it.hasNext();){
 			Entry<LocalDate, HashMap<String, Offer>> e = it.next();
 			for (Iterator<Entry<String, Offer>> it2 = e.getValue().entrySet().iterator(); it2.hasNext();) {
 				Entry<String, Offer> e2 = it2.next();
@@ -111,11 +105,34 @@ public class OfferDAO {
 					offersForYou.add(forYou);
 				}
 			}
+		}*/
+		
+		for(Offer f : allOffers1){
+			System.out.println(f.getPlace().getAddressObject().getRegion().equals(address));
+			System.out.println(!f.getStartOfPeriod().isAfter(start));
+			System.out.println(!f.getEndOfPeriod().isBefore(end));
+			
+			if(f.getPlace().getAddressObject().getRegion().equals(address)
+					&&!f.getStartOfPeriod().isAfter(start)
+					&&!f.getEndOfPeriod().isBefore(end)){
+				offersForYou.add(f);
+			}
 		}
 		
 		return offersForYou;
 	}
 	
+	public static void offersSelect(){
+		String sql = "SELECT offer_id, start_of_period, end_of_period, fk_place_id FROM offers;";
+		PreparedStatement st;
+		try {
+			st = DBManager.getInstance().getConnection().prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+		}
+		catch (SQLException e) {
+			
+		}
+	}
 	
 
 }

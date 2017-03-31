@@ -33,6 +33,9 @@ public class LoginServlet  extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setHeader("Pragma", "No-cache");
+		resp.setDateHeader("Expires", 0);
+		resp.setHeader("Cache-Control", "no-cache");
 		String email;
 		String password;
 		

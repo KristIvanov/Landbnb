@@ -4,23 +4,28 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import model.places.Address;
 import model.places.EntireHome;
 import model.places.RentedPlace;
 import model.places.Room;
+import model.users.Host;
 import model.users.User;
 
 public class RentedPlaceDAO{
 	
-	private static RentedPlaceDAO instance;
+	private static RentedPlaceDAO instance = new RentedPlaceDAO();
 	private static HashMap<String, RentedPlace> allPlaces;//key id
+	private static ArrayList<RentedPlace> placeslist;
 	
 	private RentedPlaceDAO() {
 		allPlaces = new HashMap<>();
+		placeslist = new ArrayList<>();
 		if(allPlaces.isEmpty()){
 			String sql = "SELECT rented_place_id, name, max_guests, beds, rooms, price_per_night, rating, description, is_only_one_room, fk_address_id, fk_host_id FROM rented_places;";
 			PreparedStatement st;
@@ -36,25 +41,21 @@ public class RentedPlaceDAO{
 					int onlyOneRoom = res.getInt("is_only_one_room");
 					double pricePerNight = res.getDouble("price_per_night");
 					String description = res.getString("description");
+					long hostId = res.getLong("fk_host_id");
+					long addressId = res.getLong("fk_address_id");
 					
-					User host = null;
-					String sql2 = "SELECT user_id, email_address, password, first_name, last_name, phone, users.rating  FROM users JOIN rented_places WHERE user_id = fk_host_id;";
-					PreparedStatement st2 = DBManager.getInstance().getConnection().prepareStatement(sql2);
-					ResultSet res2 = st2.executeQuery();
-					while(res2.next()){
-						host = new User(res2.getString("first_name"), res2.getString("last_name"), res2.getString("email"), res2.getString("phone"), res2.getString("password"), res2.getDouble("rating"));
-						host.setId(res.getLong("user_id"));
+					Host host = null;
+					for(User e : UserDAO.getInstance().getUseresList()){
+						if(e.getId()==hostId){
+							 host = e.beHost(); 
+						}
 					}
 					
 					Address address = null;
-					String sql3 = "SELECT address_id, region, city, street, number, apartment FROM addresses JOIN rented_places WHERE address_id = fk_address_id;";
-					st = DBManager.getInstance().getConnection().prepareStatement(sql3);
-					
-					ResultSet res3 = st.executeQuery();
-					System.out.println("idvame tuk?");
-					while(res.next()){
-						address = new Address(res3.getString("region"), res3.getString("city"), res3.getString("street"), res3.getString("number"), res3.getInt("apartment"));
-						address.setId(res.getLong("id"));
+					for(Address a : AddressDAO.getInstance().getAddressList()){
+						if(a.getId()==addressId){
+							 address = a; 
+						}
 					}
 					
 					
@@ -63,6 +64,7 @@ public class RentedPlaceDAO{
 					
 					place.setId(res.getLong("id"));
 					allPlaces.put(place.getAddress(), place);
+					placeslist.add(place);
 				}
 			} catch (SQLException e) {
 				System.out.println("loading all places failed");
@@ -73,9 +75,6 @@ public class RentedPlaceDAO{
 	}
 	
 	public static synchronized RentedPlaceDAO getInstance(){
-		if (instance == null){
-			instance = new RentedPlaceDAO();
-		}
 		return instance;
 	}
 
@@ -116,4 +115,8 @@ public class RentedPlaceDAO{
 	}
 	
 
+	public List<RentedPlace> getPlacesList(){
+		return Collections.unmodifiableList(placeslist);
+	}
+	
 }

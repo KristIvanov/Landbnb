@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="model.places.Address" %>
+<%@ page import="model.dao.AddressDAO" %>
+<%@ page import="model.dao.OfferDAO" %>
+<%@ page import="model.dao.RentedPlaceDAO" %>
+<%@ page import="model.dao.UserDAO" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,6 +14,11 @@
 </head>
 <body>
 
+<%UserDAO.getInstance().getAllUsers();
+OfferDAO.getInstance();
+RentedPlaceDAO.getInstance();
+
+%>
 	<jsp:include page="header.jsp" />
 	<br>
 	<br>

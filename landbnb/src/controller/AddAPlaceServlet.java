@@ -38,7 +38,9 @@ public class AddAPlaceServlet extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		
+		resp.setHeader("Pragma", "No-cache");
+		resp.setDateHeader("Expires", 0);
+		resp.setHeader("Cache-Control", "no-cache");
 		HttpSession ses = req.getSession();
 		if(ses.getAttribute("logged")!= null){
 			boolean logged = (Boolean) req.getSession().getAttribute("logged");
@@ -107,47 +109,52 @@ public class AddAPlaceServlet extends HttpServlet{
 				SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
 				String parameter = req.getParameter("startDate");
 				Date date;
+				LocalDateTime date1=null;
+				LocalDateTime date2=null;
+				System.out.println("all thing created");
 				try {
 					date = in.parse(parameter);
-					LocalDateTime date1 = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+					date1 = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 					String parameter2 = req.getParameter("endDate");
 					date = in.parse(parameter2);
-					LocalDateTime date2 = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-					if(user == null){
-						System.out.println("user-a e null");
-					}
-					Offer offer = new Offer(place, user.beHost(), date1.toLocalDate(), date2.toLocalDate());
-					System.out.println(offer.getStartOfPeriod());
-					
-					//addAddress to db
-					try{
-						System.out.println("addresses loading");
-						AddressDAO.getInstance().addToDB(address);
-						System.out.println("addresses loaded");
-					} catch(SQLException ex){
-						System.out.println("Error adding address to DB ");
-					}
-					
-					//addPlace to db
-					try{
-						System.out.println("palces loading");
-						RentedPlaceDAO.getInstance().addToDB(place);
-					} catch(SQLException ex){
-						System.out.println("Error adding place to DB ");
-					}
-					
-					//addOffer to db
-					try{
-						OfferDAO.getInstance().addToDB(offer, date1, date2);
-					} catch(SQLException ex){
-						System.out.println("Error adding offer to DB ");
-					}
-					
-					OfferDAO.getInstance().add(offer);
-				} catch (ParseException e) {
+					date2 = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+				}
+				catch (ParseException e) {
 					System.out.println("Wrong input details");
 					errorMsg = "Invalid input details";
 				}
+				if(user == null){
+					System.out.println("user-a e null");
+				}
+				Offer offer = new Offer(place, user.beHost(), date1.toLocalDate(), date2.toLocalDate());
+				System.out.println(offer.getStartOfPeriod());
+				
+				//addAddress to db
+				try{
+					System.out.println("addresses loading");
+					AddressDAO.getInstance().addToDB(address);
+					System.out.println("addresses loaded");
+				} catch(SQLException ex){
+					System.out.println("Error adding address to DB ");
+				}
+				
+				//addPlace to db
+				try{
+					System.out.println("palces loading");
+					RentedPlaceDAO.getInstance().addToDB(place);
+				} catch(SQLException ex){
+					System.out.println("Error adding place to DB ");
+				}
+				
+				//addOffer to db
+				try{
+					OfferDAO.getInstance().addToDB(offer, date1, date2);
+				} catch(SQLException ex){
+					System.out.println("Error adding offer to DB ");
+				}
+				
+				OfferDAO.getInstance().add(offer);
+			
 				resp.sendRedirect("index.jsp");
 			}
 			else{

@@ -25,7 +25,9 @@ public class BeAHostServlet extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		
+		resp.setHeader("Pragma", "No-cache");
+		resp.setDateHeader("Expires", 0);
+		resp.setHeader("Cache-Control", "no-cache");
 		HttpSession ses = req.getSession();
 		if(ses.getAttribute("logged")!= null){
 			boolean logged = (Boolean) req.getSession().getAttribute("logged");

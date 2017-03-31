@@ -23,7 +23,9 @@ public class ProfileServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		response.setHeader("Pragma", "No-cache");
+		response.setDateHeader("Expires", 0);
+		response.setHeader("Cache-Control", "no-cache");
 		HttpSession ses = request.getSession();
 		if(ses.getAttribute("logged")!= null){
 			boolean logged = (Boolean) request.getSession().getAttribute("logged");

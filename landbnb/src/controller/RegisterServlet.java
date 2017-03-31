@@ -36,7 +36,9 @@ public class RegisterServlet extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		resp.setHeader("Pragma", "No-cache");
+		resp.setDateHeader("Expires", 0);
+		resp.setHeader("Cache-Control", "no-cache");
 		
 		String firstName = req.getParameter("firstName");
 		String familyName = req.getParameter("familyName");
@@ -51,7 +53,7 @@ public class RegisterServlet extends HttpServlet{
 			UserDAO.getInstance().addUser(user);
 			UserDAO.getInstance().getAllUsers().put(email, user);
 			HttpSession session = req.getSession();
-			session.setAttribute("user", user);
+			session.setAttribute("mail", email);
 			session.setAttribute("logged", true);
 		} catch (InvalidEmailException | InvalidNameException | InvalidPasswordException | NotMatchingPasswordsException
 				| InvalidPhoneNumberException | UserAlreadyExistsException | SQLException e) {

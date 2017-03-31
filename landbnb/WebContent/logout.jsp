@@ -8,7 +8,7 @@
 </head>
 <body>
 Are you sure you want to log out?
-<form action="logout" method = "post"> <input type = "submit" value= "Log out" > </form>
+<form action="logout" method = "get"> <input type = "submit" value= "Log out" > </form>
 <a href = "index.jsp">Return to main page</a>
 </body>
 </html>

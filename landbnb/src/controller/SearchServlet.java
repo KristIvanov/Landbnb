@@ -23,7 +23,7 @@ import model.dao.OfferDAO;
 public class SearchServlet extends HttpServlet{
 	
 	private static String filename = "searchResults.jsp";
-	private static ArrayList<Offer> offersForYou;
+	public static ArrayList<Offer> offersForYou;
 	/**
 	 * 
 	 */
@@ -36,7 +36,10 @@ public class SearchServlet extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		filename = "searchResults.jsp";
+		resp.setHeader("Pragma", "No-cache");
+		resp.setDateHeader("Expires", 0);
+		resp.setHeader("Cache-Control", "no-cache");
 		String region = req.getParameter("region");
 		String guests = req.getParameter("guests");
 		int guestsNum = 0;
@@ -75,8 +78,5 @@ public class SearchServlet extends HttpServlet{
 		return isnumber;
 	}
 	
-	public static ArrayList<Offer> getOffers(){
-		ArrayList<Offer> val = (ArrayList<Offer>) Collections.unmodifiableCollection(offersForYou);
-		return val;
-	}
+
 }

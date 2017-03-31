@@ -15,12 +15,14 @@ public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setHeader("Pragma", "No-cache");
+		response.setDateHeader("Expires", 0);
+		response.setHeader("Cache-Control", "no-cache");
 		request.getSession().setAttribute("logged", false);
+		System.out.println(request.getAttribute("logged"));
+		request.getSession().invalidate();
 		response.sendRedirect("index.jsp");
 
 	}
