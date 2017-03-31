@@ -1,5 +1,6 @@
 package model.dao;
 
+import java.io.PrintStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,29 +32,39 @@ public class OfferDAO {
 			allOffers = new HashMap<>();
 			if(allOffers.isEmpty()){
 				//take all offers
+				System.out.println("0");
 				String sql = "SELECT offer_id, start_of_period, end_of_period, fk_place_id FROM offers;";
 				PreparedStatement st;
 				try {
 					st = DBManager.getInstance().getConnection().prepareStatement(sql);
 					ResultSet res = st.executeQuery();
+					System.out.println("0");
 					while(res.next()){//for each offer
+						System.out.println("1st");
 						//take their places
-						long offerId = res.getLong("id");
-						sql = "SELECT rented_place_id, name, max_guests, beds, rooms, price_per_night, rating, description, is_only_one_room, fk_address_id, fk_owner_id FROM rented_places WHERE rented_place_id = ?;";
+						long offerId = res.getLong("offer_id");
+						System.out.println("2");
+						sql = "SELECT rented_place_id, name, max_guests, beds, rooms, price_per_night, rented_places.rating, description, is_only_one_room, fk_address_id, fk_host_id FROM rented_places JOIN offers WHERE rented_place_id = ?;";
 						PreparedStatement st1 = DBManager.getInstance().getConnection().prepareStatement(sql);
+						System.out.println("3");
 						st1.setLong(1, offerId);
+						System.out.println("4");
 						ResultSet res1 = st1.executeQuery();
 						long addressId = res1.getLong("fk_address_id");
+						System.out.println("5");
 						Address address = AddressDAO.getInstance().getAllAddresses().get(addressId);
 						RentedPlace place = RentedPlaceDAO.getInstance().getAllPlaces().get(address);
+						System.out.println("6");
 						User host = place.getHost();
 						Offer offer = new Offer(place, (Host) host, res.getDate("start_of_period").toLocalDate(), res.getDate("end_of_period").toLocalDate());
 						offer.setId(offerId);
+						System.out.println("7");
 						allOffers.put(res.getDate("start_of_period").toLocalDate(), new HashMap<>());
 						allOffers.get(res.getDate("start_of_period").toLocalDate()).put(place.getAddress(), offer);
 					}
 				} catch (SQLException e) {
-					System.out.println("error loading offers");
+					System.out.println(e.getMessage());
+					System.out.println("tuk e");
 				}
 				
 			}
@@ -71,6 +82,7 @@ public class OfferDAO {
 
 	public synchronized void addToDB(Offer offer, LocalDateTime date1, LocalDateTime date2) throws SQLException {
 		PreparedStatement st2;
+		System.out.println(Timestamp.valueOf(date1));
 		String sql2 = "INSERT IGNORE INTO offers (start_of_period, end_of_period, fk_place_id) VALUES (?, ?, ?)";
 		st2 = DBManager.getInstance().getConnection().prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
 		st2.setTimestamp(1, Timestamp.valueOf(date1));

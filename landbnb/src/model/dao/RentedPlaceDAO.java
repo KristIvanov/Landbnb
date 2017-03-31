@@ -38,7 +38,7 @@ public class RentedPlaceDAO{
 					String description = res.getString("description");
 					
 					User host = null;
-					String sql2 = "SELECT user_id, email_address, password, first_name, last_name, phone, rating  FROM users JOIN rented_places WHERE user_id = fk_host_id;";
+					String sql2 = "SELECT user_id, email_address, password, first_name, last_name, phone, users.rating  FROM users JOIN rented_places WHERE user_id = fk_host_id;";
 					PreparedStatement st2 = DBManager.getInstance().getConnection().prepareStatement(sql2);
 					ResultSet res2 = st2.executeQuery();
 					while(res2.next()){
@@ -81,21 +81,29 @@ public class RentedPlaceDAO{
 
 	public synchronized void addToDB(RentedPlace place) throws SQLException {
 		PreparedStatement st1;
-		String sql = "INSERT IGNORE INTO rented_places (name, max_guests, beds, rooms, price_per_night, rating, description, is_only_one_room, fk_address_id, fk_host_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT IGNORE INTO rented_places (name, max_guests, beds, rooms, price_per_night, rented_places.rating, description, is_only_one_room, fk_address_id, fk_host_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		System.out.println("1");
 		st1 = DBManager.getInstance().getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		System.out.println("2");
 		st1.setString(1, place.getName());
+		System.out.println("1");
 		st1.setInt(2, place.getMaxGuests());
 		st1.setInt(3, place.getBeds());
+		System.out.println("1");
 		st1.setInt(4, place.getRooms());
 		st1.setDouble(5, place.getPricePerNight());
+		System.out.println("1");
 		st1.setDouble(6, 0.0);
 		st1.setString(7, place.getDescription());
+		System.out.println("1");
 		st1.setInt(8, (place.getRooms()==1)?1:0);
 		st1.setLong(9, place.getAddressObject().getId());
+		System.out.println("1");
 		System.out.println(place.getHost().getFamilyName());
 		System.out.println(place.getHost().getId());
 		st1.setLong(10, place.getHost().getId());
 		st1.executeUpdate();
+		System.out.println("8");
 		ResultSet rSet = st1.getGeneratedKeys();
 		while(rSet.next()){
 			place.setId(rSet.getLong(1));
